@@ -34,6 +34,20 @@ class Student(models.Model):
     # def __str__(self):
 
 
+class Observation(models.Model):
+    observation = models.CharField(max_length=4000)
+    created_at = models.DateField(auto_now_add=True)
+    student = models.ForeignKey(
+        Student,
+        to_field='user',
+        on_delete=models.CASCADE,
+        related_name='students'
+    )
+
+    def __str__(self):
+        return '%s : %s' % (self.student, self.created_at)
+    
+
 class Application(models.Model):
     created_at = models.DateField(auto_now_add=True)
     f_name = models.CharField(max_length=20, verbose_name="Student's first name")
