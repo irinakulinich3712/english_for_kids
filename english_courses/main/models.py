@@ -34,3 +34,11 @@ class Lesson(models.Model):
 
     def __str__(self):
         return '%s : %s' % (self.created_at, self.student_group)
+
+
+class Announcement(models.Model):
+    announcement = models.CharField(max_length=4000)
+    created_at = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s : %s' % (self.created_at, self.announcement)
