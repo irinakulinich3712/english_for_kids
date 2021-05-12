@@ -46,7 +46,7 @@ class Observation(models.Model):
 
     def __str__(self):
         return '%s : %s' % (self.student, self.created_at)
-    
+
 
 class Application(models.Model):
     created_at = models.DateField(auto_now_add=True)
