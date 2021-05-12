@@ -25,3 +25,12 @@ class Application(models.Model):
 
     def __str__(self):
         return '%s : %s %s' % (self.created_at, self.f_name, self.l_name)
+
+
+class Lesson(models.Model):
+    task = models.CharField(max_length=4000)
+    created_at = models.DateField(auto_now_add=True)
+    student_group = models.ForeignKey(StudentGroup, to_field='id', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s : %s' % (self.created_at, self.student_group)
