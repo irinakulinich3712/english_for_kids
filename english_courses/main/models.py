@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 class StudentGroup(models.Model):
@@ -10,6 +11,15 @@ class StudentGroup(models.Model):
 
     def __str__(self):
         return '%s%s' % (self.year, self.name)
+
+
+class CustomUser(AbstractUser):
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=30)
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return '%s %s' % (self.last_name, self.first_name)
 
 
 class Application(models.Model):
