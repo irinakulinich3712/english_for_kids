@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 class StudentGroup(models.Model):
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=10, help_text="The name must be unique within one year of studies")
     year = models.IntegerField()
 
     class Meta:
@@ -24,12 +24,14 @@ class CustomUser(AbstractUser):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True,
+                                help_text="A student must to be related to a user account")
     parent_tel_numb = models.CharField(max_length=13, verbose_name="Parent's telephone number")
     parent_f_name = models.CharField(max_length=20, verbose_name="Parent's first name")
     parent_patronimic = models.CharField(max_length=30, verbose_name="Parent's patronimic")
     parent_l_name = models.CharField(max_length=30, verbose_name="Parent's last name")
-    student_group = models.ForeignKey(StudentGroup, to_field='id', on_delete=models.SET_NULL, blank=True, null=True)
+    student_group = models.ForeignKey(StudentGroup, to_field='id', on_delete=models.SET_NULL, blank=True, null=True,
+                                      help_text="The student's group can be omitted")
 
     # def __str__(self):
 
