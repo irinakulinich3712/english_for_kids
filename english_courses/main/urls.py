@@ -3,5 +3,6 @@ from .views import all_students, announcements, applications, groups, home, less
     observations, authentication
 
 urlpatterns = [
-    path('', home.index, name='home')
+    path('', home.index, name='home'),
+    path('groups/', groups.all_groups, name='groups')
 ]
