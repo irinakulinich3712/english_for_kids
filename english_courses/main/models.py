@@ -54,9 +54,9 @@ class Observation(models.Model):
 
 class Application(models.Model):
     created_at = models.DateField(auto_now_add=True)
-    f_name = models.CharField(max_length=20, verbose_name="Student's first name")
-    l_name = models.CharField(max_length=30, verbose_name="Student's last name")
-    age = models.IntegerField(verbose_name="Student's age")
+    f_name = models.CharField(max_length=20, verbose_name="Child's first name")
+    l_name = models.CharField(max_length=30, verbose_name="Child's last name")
+    age = models.IntegerField(verbose_name="Childs's age")
     parent_tel_numb = models.CharField(max_length=10, verbose_name="Parent's telephone number")
     parent_email = models.EmailField(max_length=254, verbose_name="Parent's email")
     parent_f_name = models.CharField(max_length=20, verbose_name="Parent's first name")
