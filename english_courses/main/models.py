@@ -26,7 +26,7 @@ class CustomUser(AbstractUser):
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True,
                                 help_text="A student must to be related to a user account")
-    parent_tel_numb = models.CharField(max_length=13, verbose_name="Parent's telephone number")
+    parent_tel_numb = models.CharField(max_length=10, verbose_name="Parent's telephone number")
     parent_f_name = models.CharField(max_length=20, verbose_name="Parent's first name")
     parent_patronimic = models.CharField(max_length=30, verbose_name="Parent's patronimic", null=True, blank=True,
                                          help_text="Parent's patronimic can be omitted")
@@ -34,7 +34,8 @@ class Student(models.Model):
     student_group = models.ForeignKey(StudentGroup, to_field='id', on_delete=models.SET_NULL, blank=True, null=True,
                                       help_text="The student's group can be omitted")
 
-    # def __str__(self):
+    def __str__(self):
+        return self.user
 
 
 class Observation(models.Model):
@@ -56,7 +57,7 @@ class Application(models.Model):
     f_name = models.CharField(max_length=20, verbose_name="Student's first name")
     l_name = models.CharField(max_length=30, verbose_name="Student's last name")
     age = models.IntegerField(verbose_name="Student's age")
-    parent_tel_numb = models.CharField(max_length=13, verbose_name="Parent's telephone number")
+    parent_tel_numb = models.CharField(max_length=10, verbose_name="Parent's telephone number")
     parent_email = models.EmailField(max_length=254, verbose_name="Parent's email")
     parent_f_name = models.CharField(max_length=20, verbose_name="Parent's first name")
     parent_patronimic = models.CharField(max_length=30, verbose_name="Parent's patronimic", null=True, blank=True,
