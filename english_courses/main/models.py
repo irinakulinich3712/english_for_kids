@@ -35,7 +35,7 @@ class Student(models.Model):
                                       help_text="The student's group can be omitted")
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
 
 class Observation(models.Model):
