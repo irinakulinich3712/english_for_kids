@@ -3,6 +3,15 @@
 
 <h1>Home page</h1>
 <h2>Announcements</h2>
-
+{% if announcements %}
+{% for el in announcements %}
+<div class="alert alert-warning mt-2" data-announcement-id={{el.id}}>
+    <h3>{{ el.created_at }}</h3>
+    <p>{{ el.announcement }}</p>
+</div>
+{% endfor %}
+{% else %}
+<p>No announcements at the moment</p>
+{% endif %}
 
 {% endblock %}
