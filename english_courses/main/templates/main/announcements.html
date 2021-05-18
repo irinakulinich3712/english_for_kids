@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Current announcement</h1>
+{% if announcements %}
+{% for el in announcements %}
+<div class="alert alert-warning mt-2" >
+    <h3>{{ el.created_at }}</h3>
+    <p>{{ el.announcement }}</p>
+</div>
+{% endfor %}
+{% else %}
+<p>There are no announcements at the moment!</p>
+{% endif %}
+
+{% endblock %}
