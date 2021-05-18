@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Group {{group.year}}{{group.name}} </h1>
+{% if students %}
+<p> Number of students: {{ students|length }} </p>
+{% for el in students %}
+<div class="alert alert-warning mt-2">
+    <h3>{{el.user__last_name}} {{el.user__first_name}}</h3>
+</div>
+{% endfor %}
+{% else %}
+<p>There are no students in this group yet!</p>
+{% endif %}
+
+{% endblock %}
