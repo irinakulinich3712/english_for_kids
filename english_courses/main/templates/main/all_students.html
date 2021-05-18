@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+{% if students %}
+{% for el in students %}
+<div class="alert alert-warning mt-2">
+    <h3>{{el.last_name}} {{el.first_name}}</h3>
+    <h2>{{el.student_group}}</h2>
+</div>
+{% endfor %}
+{% else %}
+<p>You have no students at the moment!</p>
+{% endif %}
+
+
+
+{% endblock %}
