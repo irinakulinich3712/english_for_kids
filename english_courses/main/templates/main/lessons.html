@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Group {{group.year}}{{group.name}}</h1>
+{% if group_lessons %}
+{% for el in group_lessons %}
+<div class="alert alert-warning mt-2">
+    <h3>{{el.created_at}}</h3>
+    <h3>{{el.task}}</h3>
+</div>
+{% endfor %}
+{% else %}
+<p>This group has no lesson records!</p>
+{% endif %}
+
+{% endblock %}
