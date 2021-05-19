@@ -9,11 +9,6 @@
     <h3>{{el.created_at}}</h3>
     <p>Child's name: {{el.f_name}} {{el.l_name}}</p>
     <p>Age: {{el.age}}</p>
-    <p>Parent's name: {{el.parent_f_name}}
-     {% if el.parent_patronimic %} {{el.parent_patronimic}} {% endif %}
-        {{el.parent_l_name}}</p>
-    <p>Parent's telephone number: {{el.parent_tel_numb}}</p>
-     <p>Parent's e-mail address: {{el.parent_email}}</p>
 </div>
 {% endfor %}
 {% else %}
