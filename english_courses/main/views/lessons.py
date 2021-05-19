@@ -10,7 +10,7 @@ def lessons(request, g_id):
         group_obj = StudentGroup.objects.get(id=g_id)
 
         group_lessons_list = Lesson.objects.filter(student_group=g_id,
-                                              created_at__gte=datetime.now() - timedelta(days=60)) \
+                                                   created_at__gte=datetime.now() - timedelta(days=60)) \
             .order_by('created_at')
 
         return render(request, 'main/lessons.html', {'group_lessons': group_lessons_list, 'group': group_obj})
