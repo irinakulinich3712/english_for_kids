@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+{% if application %}
+
+<div class="alert alert-warning mt-2">
+    <h3>{{application.created_at}}</h3>
+    <p>Child's name: {{application.f_name}} {{application.l_name}}</p>
+    <p>Age: {{application.age}}</p>
+    <p>Parent's name: {{application.parent_f_name}}
+     {% if application.parent_patronimic %} {{application.parent_patronimic}} {% endif %}
+        {{application.parent_l_name}}</p>
+    <p>Parent's telephone number: {{application.parent_tel_numb}}</p>
+     <p>Parent's e-mail address: {{application.parent_email}}</p>
+</div>
+{% else %}
+<p>There are no applications at the moment!</p>
+{% endif %}
+{% endblock %}
