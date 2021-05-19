@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+
+<h1>Teacher's obeservations</h1>
+{% if observations %}
+{% for el in observations %}
+<div class="alert alert-warning mt-2">
+    <h3>{{el.created_at}}</h3>
+    <h3>{{el.observation}}</h3>
+</div>
+{% endfor %}
+{% else %}
+<p>There are no teacher's observations!</p>
+{% endif %}
+
+{% endblock %}
