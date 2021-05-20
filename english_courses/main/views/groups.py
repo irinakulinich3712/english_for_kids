@@ -6,7 +6,9 @@ from ..models import StudentGroup, Student
 
 
 def all_groups(request):
-    groups_list = StudentGroup.objects.order_by('year')
+    groups_list = [dict(id=s_group.id, year=s_group.year, name=s_group.name,
+                        student_count=len(Student.objects.filter(student_group_id=s_group.id))) for s_group in
+                   StudentGroup.objects.all()]
 
     return render(request, 'main/all_groups.html', {'groups': groups_list})
 
