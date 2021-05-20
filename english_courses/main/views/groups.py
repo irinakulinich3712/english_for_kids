@@ -13,7 +13,7 @@ def all_groups(request):
     return render(request, 'main/all_groups.html', {'groups': groups_list})
 
 
-def group(request, g_id):
+def group_students(request, g_id):
     try:
         group_obj = StudentGroup.objects.get(id=g_id)
 
@@ -22,6 +22,6 @@ def group(request, g_id):
                                           'user__last_name',
                                           'user__first_name').order_by('user__last_name')
 
-        return render(request, 'main/group.html', {'group': group_obj, 'students': students_list})
+        return render(request, 'main/group_students.html', {'group': group_obj, 'students': students_list})
     except ObjectDoesNotExist:
         return HttpResponse("This group could not be found")
