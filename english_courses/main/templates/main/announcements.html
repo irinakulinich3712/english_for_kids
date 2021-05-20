@@ -8,6 +8,7 @@
 <div class="alert alert-warning mt-2" >
     <h3>{{ el.created_at }}</h3>
     <p>{{ el.announcement }}</p>
+    <button> <a href="{% url 'delete_announcement' el.id %}">Delete</a> </button>
 </div>
 {% endfor %}
 {% else %}
