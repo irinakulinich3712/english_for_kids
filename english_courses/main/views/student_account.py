@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
-from ..models import Student, StudentGroup, Observation
+from ..models import Student, StudentGroup, Observation, CustomUser
 from django.http import HttpResponse
 
 
@@ -33,3 +34,11 @@ def student_account(request, s_id):
         return render(request, 'main/student_account.html', {'student': student})
     except ObjectDoesNotExist:
         return HttpResponse("The student could not be found")
+
+
+def delete_student(request, s_id):
+    user = CustomUser.objects.get(user_id=s_id)
+    user.delete()
+    messages.success(request, "The student has been deleted successfully")
+    return redirect('all_students')
+
