@@ -16,12 +16,19 @@ def all_groups(request):
 def group_students(request, g_id):
     try:
         group_obj = StudentGroup.objects.get(id=g_id)
-
-        students_list = Student.objects.filter(student_group_id=g_id). \
-            select_related('user').values('user_id',
-                                          'user__last_name',
-                                          'user__first_name').order_by('user__last_name')
+        num = 0
+        students_list = []
+        for s in Student.objects.filter(student_group_id=g_id).select_related('user').values('user_id',
+                                                                                             'user__last_name',
+                                                                                             'user__first_name'). \
+                order_by('user__last_name'):
+            num += 1
+            students_list.append(dict(num=num,
+                                      id=s['user_id'], first_name=s['user__first_name'],
+                                      last_name=s['user__last_name']))
 
         return render(request, 'main/group_students.html', {'group': group_obj, 'students': students_list})
     except ObjectDoesNotExist:
         return HttpResponse("This group could not be found")
+
+
