@@ -32,3 +32,16 @@ def group_students(request, g_id):
         return HttpResponse("This group could not be found")
 
 
+def delete_group(request, g_id):
+    group_object = StudentGroup.objects.get(id=g_id)
+    group_object.delete()
+    messages.success(request, "You have deleted a group successfully")
+    return redirect('groups')
+
+
+def delete_student_from_group(request, g_id, s_id):
+    student = Student.objects.get(user_id=s_id)
+    student.student_group_id = None
+    messages.success(request, "The student has been removed from group")
+    student.save()
+    return redirect('group_students', g_id=g_id)
