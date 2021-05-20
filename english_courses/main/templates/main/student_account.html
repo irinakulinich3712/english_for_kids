@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<button> <a href="{% url 'delete_student' student.id %}">Delete this student's account</a> </button>
+
 <div class="student-account" >
     {% if student %}
     <h1>{{student.first_name}} {{student.last_name}}</h1>
