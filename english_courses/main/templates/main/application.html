@@ -4,6 +4,8 @@
 
 {% if application %}
 
+<button> <a href="{% url 'delete_application' application.id %}">Delete</a> </button>
+
 <div class="alert alert-warning mt-2">
     <h3>{{application.created_at}}</h3>
     <p>Child's name: {{application.f_name}} {{application.l_name}}</p>
