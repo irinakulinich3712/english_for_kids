@@ -1,0 +1,9 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Group {{group.year}}{{group.name}} </h1>
+<button> <a href="{% url 'delete_group' group.id %}">Delete this group</a> </button>
+<p> Number of students: {{ student_count }} </p>
+
+{% endblock %}

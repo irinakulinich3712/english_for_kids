@@ -3,9 +3,7 @@
 {% block content %}
 
 <h1>Group {{group.year}}{{group.name}} </h1>
-<button> <a href="{% url 'delete_group' group.id %}">Delete this group</a> </button>
 {% if students %}
-<p> Number of students: {{ students|length }} </p>
 {% for el in students %}
 <div class="alert alert-warning mt-2">
     <h3>{{el.user__last_name}} {{el.user__first_name}}</h3>
