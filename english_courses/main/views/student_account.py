@@ -39,7 +39,7 @@ def student_account(request, s_id):
 
 
 def delete_student(request, s_id):
-    user = CustomUser.objects.get(user_id=s_id)
+    user = CustomUser.objects.get(id=s_id)
     user.delete()
     messages.success(request, "The student has been deleted successfully")
     return redirect('all_students')
