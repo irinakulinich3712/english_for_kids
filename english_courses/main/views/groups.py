@@ -54,7 +54,24 @@ def group(request, g_id):
         group_obj = StudentGroup.objects.get(id=g_id)
         student_count = len(Student.objects.filter(student_group_id=g_id))
 
-        return render(request, 'main/group.html', {'group': group_obj, 'student_count': student_count})
+        if request.method == 'POST':
+            edit_form = EditGroupForm(request.POST, instance=group_obj)
+
+            if edit_form.is_valid():
+                edit_form.save()
+                messages.success(request, "You have updated a group successfully")
+                return redirect('groups')
+            else:
+                messages.error(request, "You have filled the form incorrectly")
+        else:
+            edit_form = EditGroupForm(instance=group_obj)
+
+        context = {
+            'edit_form': edit_form
+        }
+
+        return render(request, 'main/group.html', {'group': group_obj, 'student_count': student_count,
+                                                   'edit_form':context['edit_form']})
     except ObjectDoesNotExist:
         return HttpResponse("This group could not be found")
 
