@@ -1,11 +1,11 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.contrib.auth.models import Group
 
 from .models import Application, Student, StudentGroup, Lesson, Announcement, Observation, CustomUser
 from django.forms import ModelForm, TextInput, Textarea, EmailInput, Select, ModelChoiceField, \
-    NumberInput, CharField, EmailField
+    NumberInput, CharField, EmailField, PasswordInput
 
 
 class CreateGroupForm(ModelForm):
@@ -437,3 +437,21 @@ class EditStudentForm(ModelForm):
         model = Student
         fields = ('parent_f_name', 'parent_patronimic', 'parent_l_name',
                   'parent_tel_numb', 'student_group')
+
+
+class LoginForm(AuthenticationForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'password')
+
+    username = CharField(widget=TextInput(
+        attrs={'class': 'form__input',
+               'id': 'email'
+               }))
+    password = CharField(widget=PasswordInput(
+        attrs={
+            'class': 'form__input',
+            'id': 'password',
+            'minlength': 10,
+            'maxlength': 10
+        }))
