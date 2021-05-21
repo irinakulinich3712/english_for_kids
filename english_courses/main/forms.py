@@ -339,3 +339,101 @@ class CreateStudentForm(UserCreationForm):
         student.student_group = self.cleaned_data.get('student_group')
         student.save()
         return user
+
+
+class EditUserForm(ModelForm):
+    username = CharField(max_length=20, label="Username", widget=TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter a username"
+    }))
+    first_name = CharField(max_length=20, label="First name", widget=TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter the student's first name"
+    }))
+    last_name = CharField(max_length=30, label="Last name", widget=TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter the student's last name"
+    }))
+    email = EmailField(max_length=200, label="E-mail", widget=EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter the parent's e-mail address"
+    }))
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data["first_name"]
+
+        if not first_name.isalpha():
+            raise ValidationError("The first name should only contain letters")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data["last_name"]
+
+        if not last_name.isalpha():
+            raise ValidationError("The last name should only contain letters")
+        return last_name
+
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ('username', 'first_name', 'last_name', 'email')
+
+
+class EditStudentForm(ModelForm):
+    parent_f_name = CharField(max_length=20, label="Parent's first name", widget=TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter the parent's first name"
+    }))
+    parent_patronimic = CharField(max_length=30, label="Parent's patronimic", required=False,
+                                  help_text="Parent's patronimic can be omitted", widget=TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': "Enter the parent's patronimic"
+        }))
+    parent_l_name = CharField(max_length=30, label="Parent's last name", widget=TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter the parent's last name"
+    }))
+    parent_tel_numb = CharField(max_length=10, min_length=10, label="Parent's telephone number",
+                                widget=TextInput(attrs={
+                                    'class': 'form-control',
+                                    'placeholder': "Enter the parent's telephone number"
+                                }))
+
+    student_group = ModelChoiceField(queryset=StudentGroup.objects.all(), label="Student group",
+                                     required=False, help_text="Student's group can be omitted",
+                                     widget=Select(attrs={
+                                         'class': 'form-control',
+                                         'placeholder': "Choose the student's groups"
+                                     }))
+
+    def clean_parent_tel_numb(self):
+        parent_tel_numb = self.cleaned_data["parent_tel_numb"]
+
+        if not parent_tel_numb.isdecimal():
+            raise ValidationError("Telephone number should only contain digits")
+        return parent_tel_numb
+
+    def clean_parent_f_name(self):
+        parent_f_name = self.cleaned_data["parent_f_name"]
+
+        if not parent_f_name.isalpha():
+            raise ValidationError("The first name should only contain letters")
+        return parent_f_name
+
+    def clean_parent_patronimic(self):
+        parent_patronimic = self.cleaned_data["parent_patronimic"]
+
+        if not parent_patronimic.isalpha():
+            raise ValidationError("The patronimic should only contain letters")
+        return parent_patronimic
+
+    def clean_parent_l_name(self):
+        parent_l_name = self.cleaned_data["parent_l_name"]
+
+        if not parent_l_name.isalpha():
+            raise ValidationError("The last name should only contain letters")
+        return parent_l_name
+
+    class Meta(UserCreationForm.Meta):
+        model = Student
+        fields = ('parent_f_name', 'parent_patronimic', 'parent_l_name',
+                  'parent_tel_numb', 'student_group')
