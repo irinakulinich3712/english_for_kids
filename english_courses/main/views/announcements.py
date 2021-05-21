@@ -37,7 +37,6 @@ def announcements(request):
 
 def edit_announcement(request, an_id):
     obj = Announcement.objects.get(id=an_id)
-    data = serialize("json", [obj], fields='announcement')
 
     if request.method == 'POST':
         edit_form = EditAnnouncementForm(request.POST, instance=obj)
