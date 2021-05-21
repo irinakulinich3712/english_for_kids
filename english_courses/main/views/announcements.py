@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from django.contrib import messages
+from django.core.serializers import serialize
 from django.shortcuts import render, redirect
 
 from ..forms import CreateAnnouncementForm, EditAnnouncementForm
@@ -32,6 +33,22 @@ def announcements(request):
     return render(request, 'main/announcements.html', {'announcements': announcements_list,
                                                        'create_form': context['create_form'],
                                                        'edit_form': context['edit_form']})
+
+
+def edit_announcement(request, an_id):
+    obj = Announcement.objects.get(id=an_id)
+    data = serialize("json", [obj], fields='announcement')
+
+    if request.method == 'POST':
+        edit_form = EditAnnouncementForm(request.POST, instance=obj)
+
+        if edit_form.is_valid():
+            edit_form.save()
+            messages.success(request, 'You have edited the announcement successfully')
+        else:
+            messages.error(request, 'You have not filled the form correctly')
+
+    return redirect('announcements')
 
 
 def delete_announcement(request, an_id):
