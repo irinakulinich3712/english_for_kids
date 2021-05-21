@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1>Teacher's obeservations</h1>
+<h1>Teacher's obeservations for {{f_name}} {{l_name}}</h1>
 {% if observations %}
 {% for el in observations %}
 <div class="alert alert-warning mt-2">
@@ -15,5 +15,41 @@
 {% else %}
 <p>There are no teacher's observations!</p>
 {% endif %}
+
+<h1>Create observation</h1>
+<form method="post">
+    {% csrf_token %}
+    {% for field in create_form %}
+    <p>
+      {{ field.label_tag }}<br>
+      {{ field }}
+      {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+      {% endif %}
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+    </p>
+  {% endfor %}
+    <button type="submit">Save</button>
+</form>
+
+<h1>Edit observation</h1>
+<form method="post"  action="{% url 'login' %}">
+    {% csrf_token %}
+    {% for field in edit_form %}
+    <p>
+      {{ field.label_tag }}<br>
+      {{ field }}
+      {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+      {% endif %}
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+    </p>
+  {% endfor %}
+    <button type="submit">Save</button>
+</form>
 
 {% endblock %}
