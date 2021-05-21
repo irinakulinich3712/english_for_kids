@@ -8,6 +8,7 @@ from django.http import HttpResponse
 def student_account(request, s_id):
     try:
         student_object = Student.objects.select_related('user').values('user_id',
+                                                                       'user__username',
                                                                        'user__first_name',
                                                                        'user__last_name',
                                                                        'user__email',
@@ -17,7 +18,8 @@ def student_account(request, s_id):
                                                                        'parent_l_name',
                                                                        'student_group_id').get(user_id=s_id)
 
-        student = dict(id=student_object['user_id'], first_name=student_object['user__first_name'],
+        student = dict(id=student_object['user_id'], username=student_object['user__username'],
+                       first_name=student_object['user__first_name'],
                        last_name=student_object['user__last_name'],
                        parent_tel_numb=student_object['parent_tel_numb'],
                        parent_f_name=student_object['parent_f_name'],
