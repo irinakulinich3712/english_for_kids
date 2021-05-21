@@ -250,17 +250,18 @@ class CreateStudentForm(UserCreationForm):
     }))
     parent_patronimic = CharField(max_length=30, label="Parent's patronimic", required=False,
                                   help_text="Parent's patronimic can be omitted", widget=TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': "Enter the parent's patronimic"
-    }))
+            'class': 'form-control',
+            'placeholder': "Enter the parent's patronimic"
+        }))
     parent_l_name = CharField(max_length=30, label="Parent's last name", widget=TextInput(attrs={
         'class': 'form-control',
         'placeholder': "Enter the parent's last name"
     }))
-    parent_tel_numb = CharField(max_length=10, min_length=10, label="Parent's telephone number", widget=TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': "Enter the parent's telephone number"
-    }))
+    parent_tel_numb = CharField(max_length=10, min_length=10, label="Parent's telephone number",
+                                widget=TextInput(attrs={
+                                    'class': 'form-control',
+                                    'placeholder': "Enter the parent's telephone number"
+                                }))
 
     student_group = ModelChoiceField(queryset=StudentGroup.objects.all(), label="Student group",
                                      required=False, help_text="Student's group can be omitted",
@@ -269,19 +270,19 @@ class CreateStudentForm(UserCreationForm):
                                          'placeholder': "Choose the student's groups"
                                      }))
 
-    def clean_f_name(self):
-        f_name = self.cleaned_data["f_name"]
+    def clean_first_name(self):
+        first_name = self.cleaned_data["first_name"]
 
-        if not f_name.isalpha():
+        if not first_name.isalpha():
             raise ValidationError("The first name should only contain letters")
-        return f_name
+        return first_name
 
-    def clean_l_name(self):
-        l_name = self.cleaned_data["l_name"]
+    def clean_last_name(self):
+        last_name = self.cleaned_data["last_name"]
 
-        if not l_name.isalpha():
+        if not last_name.isalpha():
             raise ValidationError("The last name should only contain letters")
-        return l_name
+        return last_name
 
     def clean_parent_tel_numb(self):
         parent_tel_numb = self.cleaned_data["parent_tel_numb"]
