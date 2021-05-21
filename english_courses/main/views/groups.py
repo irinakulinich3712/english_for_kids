@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from ..forms import EditGroupForm
+from ..forms import EditGroupForm, CreateGroupForm
 from ..models import StudentGroup, Student
 
 
@@ -12,7 +12,22 @@ def all_groups(request):
                         student_count=len(Student.objects.filter(student_group_id=s_group.id))) for s_group in
                    StudentGroup.objects.all()]
 
-    return render(request, 'main/all_groups.html', {'groups': groups_list})
+    if request.method == 'POST':
+        create_form = CreateGroupForm(request.POST)
+        if create_form.is_valid():
+            create_form.save()
+            messages.success(request, 'The group has been created successfully')
+            return redirect('groups')
+        else:
+            messages.error(request, 'Please, fill the form correctly')
+    else:
+        create_form = CreateGroupForm()
+
+    context = {
+        'create_form': create_form
+    }
+
+    return render(request, 'main/all_groups.html', {'groups': groups_list, 'create_form': context['create_form']})
 
 
 def group_students(request, g_id):
