@@ -60,3 +60,32 @@ class EditLessonForm(ModelForm):
                 'placeholder': "Enter the task"
             }),
         }
+
+
+class CreateObservationForm(ModelForm):
+    class Meta:
+        model = Observation
+        exclude = ("created_at", "student")
+        fields = ["observation"]
+        widgets = {
+            "observation": Textarea(attrs={
+                'class': 'modal-form__input',
+                'placeholder': "Enter an observation"
+            }),
+        }
+
+
+class EditObservationForm(ModelForm):
+    class Meta:
+        model = Observation
+        exclude = ("created_at", "student")
+        fields = ["observation"]
+        widgets = {
+            "observation": Textarea(attrs={
+                'id': 'edit-observation',
+                'class': 'modal-form__input',
+                'placeholder': "Enter an observation"
+            }),
+
+        }
+
