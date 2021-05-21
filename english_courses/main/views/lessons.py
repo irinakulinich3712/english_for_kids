@@ -14,7 +14,7 @@ def lessons(request, g_id):
 
         group_lessons_list = Lesson.objects.filter(student_group=g_id,
                                                    created_at__gte=datetime.now() - timedelta(days=60)) \
-            .order_by('created_at')
+            .order_by('-created_at')
 
         edit_form = EditLessonForm()
 
