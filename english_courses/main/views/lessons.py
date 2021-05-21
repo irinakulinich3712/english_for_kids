@@ -42,6 +42,20 @@ def lessons(request, g_id):
         return HttpResponse("This groups does not exist")
 
 
+def edit_lesson(request, g_id, l_id):
+    obj = Lesson.objects.get(id=l_id)
+    if request.method == 'POST':
+        edit_form = EditLessonForm(request.POST, instance=obj)
+
+        if edit_form.is_valid():
+            edit_form.save()
+            messages.success(request, "The lesson has been edited successfully")
+
+        else:
+            messages.error(request, "The form has been filled incorrectly")
+    return redirect('lessons', g_id=g_id)
+
+
 def delete_lesson(request, g_id, l_id):
     try:
         lesson = Lesson.objects.get(id=l_id)
