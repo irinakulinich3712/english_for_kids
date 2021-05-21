@@ -89,3 +89,29 @@ class EditObservationForm(ModelForm):
 
         }
 
+
+class CreateAnnouncementForm(ModelForm):
+    class Meta:
+        model = Announcement
+        exclude = ("created_at",)
+        fields = ["announcement"]
+        widgets = {
+            "announcement": Textarea(attrs={
+                'class': 'modal-form__input',
+                'placeholder': "Enter the announcement"
+            }),
+        }
+
+
+class EditAnnouncementForm(ModelForm):
+    class Meta:
+        model = Announcement
+        exclude = ("created_at",)
+        fields = ["announcement"]
+        widgets = {
+            "announcement": Textarea(attrs={
+                'id': 'edit-announcement',
+                'class': 'modal-form__input',
+                'placeholder': "Enter the announcement"
+            }),
+        }
