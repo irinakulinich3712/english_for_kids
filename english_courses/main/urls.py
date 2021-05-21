@@ -5,6 +5,7 @@ from .views import all_students, announcements, applications, groups, home, less
 urlpatterns = [
     path('', home.index, name='home'),
     path('groups/', groups.all_groups, name='groups'),
+    path('groups/<int:g_id>/', groups.group, name='group'),
     path('groups/<int:g_id>/students/', groups.group_students, name='group_students'),
     path('groups/<int:g_id>/delete-group/', groups.delete_group, name='delete_group'),
     path('groups/<int:g_id>/delete-student-from-group/<int:s_id>/', groups.delete_student_from_group,
