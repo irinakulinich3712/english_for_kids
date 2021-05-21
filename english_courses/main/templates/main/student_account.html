@@ -8,6 +8,7 @@
     {% if student %}
     <h1>{{student.first_name}} {{student.last_name}}</h1>
     <h1>{{student.student_group}}</h1>
+    <p>Username: {{student.username}}</p>
     <p>Parent: {{student.parent_f_name}}
         {% if student.parent_patronimic %} {{student.parent_patronimic}} {% endif %}
         {{student.parent_l_name}}</p>
