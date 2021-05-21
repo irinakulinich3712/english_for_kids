@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from datetime import datetime, timedelta
 
-from ..forms import CreateLessonForm
+from ..forms import CreateLessonForm, EditLessonForm
 from ..models import StudentGroup, Lesson
 from django.http import HttpResponse
 
