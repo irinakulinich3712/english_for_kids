@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from ..forms import EditGroupForm
 from ..models import StudentGroup, Student
 
 
@@ -28,6 +30,16 @@ def group_students(request, g_id):
                                       last_name=s['user__last_name']))
 
         return render(request, 'main/group_students.html', {'group': group_obj, 'students': students_list})
+    except ObjectDoesNotExist:
+        return HttpResponse("This group could not be found")
+
+
+def group(request, g_id):
+    try:
+        group_obj = StudentGroup.objects.get(id=g_id)
+        student_count = len(Student.objects.filter(student_group_id=g_id))
+
+        return render(request, 'main/group.html', {'group': group_obj, 'student_count': student_count})
     except ObjectDoesNotExist:
         return HttpResponse("This group could not be found")
 
