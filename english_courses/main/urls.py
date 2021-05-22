@@ -34,4 +34,7 @@ urlpatterns = [
     path('students/<int:s_id>/delete-observation/<int:o_id>/', observations.delete_observation,
          name='delete_observation'),
     path('students/<int:s_id>/delete-student/', student_account.delete_student, name='delete_student'),
+
+    path('login/', authentication.login_user, name='login'),
+    path('logout/', authentication.logout_user, name='logout')
 ]
