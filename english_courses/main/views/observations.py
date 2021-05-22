@@ -1,6 +1,8 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.shortcuts import render, redirect
 
+from .all_students import group_check
 from ..forms import EditObservationForm, CreateObservationForm
 from ..models import Observation, CustomUser, Student
 
@@ -38,6 +40,8 @@ def observations(request, s_id):
                                                       'l_name': student['l_name']})
 
 
+@user_passes_test(group_check)
+@login_required
 def edit_observation(request, s_id, o_id):
     obj = Observation.objects.get(id=o_id)
     if request.method == 'POST':
@@ -50,6 +54,8 @@ def edit_observation(request, s_id, o_id):
     return redirect('observations', s_id=s_id)
 
 
+@user_passes_test(group_check)
+@login_required
 def delete_observation(request, s_id, o_id):
     observation = Observation.objects.get(id=o_id)
     observation.delete()

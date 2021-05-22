@@ -4,6 +4,7 @@ from django.conf import settings
 import random
 import string
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
@@ -16,6 +17,8 @@ def group_check(user):
     return user.is_superuser or user.groups.filter(name='teacher').exists()
 
 
+@user_passes_test(group_check)
+@login_required
 def all_students(request):
     students_list = [dict(
         id=s['user_id'], first_name=s['user__first_name'], last_name=s['user__last_name'],
@@ -34,6 +37,8 @@ def all_students(request):
     return render(request, 'main/all_students.html', {'students': students_list})
 
 
+@user_passes_test(group_check)
+@login_required
 def new_student(request):
     password_characters = string.ascii_letters + string.digits + string.punctuation
     if request.method == 'POST':

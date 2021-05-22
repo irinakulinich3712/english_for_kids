@@ -1,12 +1,16 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 
+from .all_students import group_check
 from ..forms import EditUserForm, EditStudentForm
-from ..models import Student, StudentGroup, Observation, CustomUser
+from ..models import Student, StudentGroup, CustomUser
 from django.http import HttpResponse
 
 
+@user_passes_test(group_check)
+@login_required
 def student_account(request, s_id):
     try:
         student_object = Student.objects.select_related('user').values('user_id',
@@ -40,6 +44,8 @@ def student_account(request, s_id):
         return HttpResponse("The student could not be found")
 
 
+@user_passes_test(group_check)
+@login_required
 def edit_student(request, s_id):
     user = CustomUser.objects.get(id=s_id)
     student = Student.objects.get(user_id=s_id)
@@ -68,6 +74,8 @@ def edit_student(request, s_id):
                                                       'student_edit_form': context['student_edit_form']})
 
 
+@user_passes_test(group_check)
+@login_required
 def delete_student(request, s_id):
     user = CustomUser.objects.get(id=s_id)
     user.delete()

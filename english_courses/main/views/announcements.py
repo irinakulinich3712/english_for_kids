@@ -1,13 +1,17 @@
 from datetime import datetime, timedelta
 
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.core.serializers import serialize
 from django.shortcuts import render, redirect
 
+from .all_students import group_check
 from ..forms import CreateAnnouncementForm, EditAnnouncementForm
 from ..models import Announcement
 
 
+@user_passes_test(group_check)
+@login_required
 def announcements(request):
     announcements_list = Announcement.objects.filter(created_at__gte=datetime.now() - timedelta(days=60)).order_by(
         'created_at')
@@ -35,6 +39,8 @@ def announcements(request):
                                                        'edit_form': context['edit_form']})
 
 
+@user_passes_test(group_check)
+@login_required
 def edit_announcement(request, an_id):
     obj = Announcement.objects.get(id=an_id)
 
@@ -50,6 +56,8 @@ def edit_announcement(request, an_id):
     return redirect('announcements')
 
 
+@user_passes_test(group_check)
+@login_required
 def delete_announcement(request, an_id):
     announcement = Announcement.objects.get(id=an_id)
     announcement.delete()

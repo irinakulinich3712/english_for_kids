@@ -1,12 +1,16 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
+from .all_students import group_check
 from ..forms import EditGroupForm, CreateGroupForm
 from ..models import StudentGroup, Student
 
 
+@user_passes_test(group_check)
+@login_required
 def all_groups(request):
     groups_list = [dict(id=s_group.id, year=s_group.year, name=s_group.name,
                         student_count=len(Student.objects.filter(student_group_id=s_group.id))) for s_group in
@@ -30,6 +34,8 @@ def all_groups(request):
     return render(request, 'main/all_groups.html', {'groups': groups_list, 'create_form': context['create_form']})
 
 
+@user_passes_test(group_check)
+@login_required
 def group_students(request, g_id):
     try:
         group_obj = StudentGroup.objects.get(id=g_id)
@@ -49,6 +55,8 @@ def group_students(request, g_id):
         return HttpResponse("This group could not be found")
 
 
+@user_passes_test(group_check)
+@login_required
 def group(request, g_id):
     try:
         group_obj = StudentGroup.objects.get(id=g_id)
@@ -76,6 +84,8 @@ def group(request, g_id):
         return HttpResponse("This group could not be found")
 
 
+@user_passes_test(group_check)
+@login_required
 def delete_group(request, g_id):
     group_object = StudentGroup.objects.get(id=g_id)
     group_object.delete()
@@ -83,6 +93,8 @@ def delete_group(request, g_id):
     return redirect('groups')
 
 
+@user_passes_test(group_check)
+@login_required
 def delete_student_from_group(request, g_id, s_id):
     student = Student.objects.get(user_id=s_id)
     student.student_group_id = None

@@ -1,8 +1,10 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from datetime import datetime, timedelta
 
+from .all_students import group_check
 from ..forms import CreateLessonForm, EditLessonForm
 from ..models import StudentGroup, Lesson
 from django.http import HttpResponse
@@ -42,6 +44,8 @@ def lessons(request, g_id):
         return HttpResponse("This groups does not exist")
 
 
+@user_passes_test(group_check)
+@login_required
 def edit_lesson(request, g_id, l_id):
     obj = Lesson.objects.get(id=l_id)
     if request.method == 'POST':
@@ -56,6 +60,8 @@ def edit_lesson(request, g_id, l_id):
     return redirect('lessons', g_id=g_id)
 
 
+@user_passes_test(group_check)
+@login_required
 def delete_lesson(request, g_id, l_id):
     try:
         lesson = Lesson.objects.get(id=l_id)

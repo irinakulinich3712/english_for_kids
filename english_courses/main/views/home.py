@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from ..forms import CreateApplicationForm
 from ..models import Announcement
