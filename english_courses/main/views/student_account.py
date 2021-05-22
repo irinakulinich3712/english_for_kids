@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
+
+from ..forms import EditUserForm, EditStudentForm
 from ..models import Student, StudentGroup, Observation, CustomUser
 from django.http import HttpResponse
 
@@ -36,6 +38,34 @@ def student_account(request, s_id):
         return render(request, 'main/student_account.html', {'student': student})
     except ObjectDoesNotExist:
         return HttpResponse("The student could not be found")
+
+
+def edit_student(request, s_id):
+    user = CustomUser.objects.get(id=s_id)
+    student = Student.objects.get(user_id=s_id)
+
+    if request.method == 'POST':
+        user_edit_form = EditUserForm(request.POST, instance=user)
+        student_edit_form = EditStudentForm(request.POST, instance=student)
+
+        if user_edit_form.is_valid() and student_edit_form.is_valid():
+            user_edit_form.save()
+            student_edit_form.save()
+            messages.success(request, "The student's account has been edited successfully")
+            return redirect('student_account', s_id=s_id)
+        else:
+            messages.error(request, "The form has not been filled correctly")
+
+    else:
+        user_edit_form = EditUserForm(instance=user)
+        student_edit_form = EditStudentForm(instance=student)
+
+    context = {
+        'user_edit_form': user_edit_form,
+        'student_edit_form': student_edit_form
+    }
+    return render(request, 'main/edit_student.html', {'user_edit_form': context['user_edit_form'],
+                                                      'student_edit_form': context['student_edit_form']})
 
 
 def delete_student(request, s_id):
