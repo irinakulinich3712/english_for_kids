@@ -24,6 +24,7 @@ urlpatterns = [
 
 
     path('students/', all_students.all_students, name='all_students'),
+    path('students/new-student/', all_students.new_student, name='new_student'),
     path('students/<int:s_id>/', student_account.student_account, name='student_account'),
     path('students/<int:s_id>/observations/', observations.observations, name='observations'),
     path('students/<int:s_id>/delete-observation/<int:o_id>/', observations.delete_observation,
