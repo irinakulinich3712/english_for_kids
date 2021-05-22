@@ -12,9 +12,11 @@ urlpatterns = [
          name='delete_student_from_group'),
 
     path('groups/<int:g_id>/lessons/', lessons.lessons, name='lessons'),
+    path('groups/<int:g_id>/lessons/edit-lesson/<int:l_id>/', lessons.edit_lesson, name='edit_lesson'),
     path('groups/<int:g_id>/lessons/delete-lesson/<int:l_id>/', lessons.delete_lesson, name='delete_lesson'),
 
     path('announcements/', announcements.announcements, name='announcements'),
+    path('announcements/edit-announcement/<int:an_id>/', announcements.edit_announcement, name='edit_announcement'),
     path('announcements/delete-announcement/<int:an_id>/', announcements.delete_announcement,
          name='delete_announcement'),
 
@@ -25,8 +27,10 @@ urlpatterns = [
 
     path('students/', all_students.all_students, name='all_students'),
     path('students/new-student/', all_students.new_student, name='new_student'),
+    path('students/<int:s_id>/edit-student/', student_account.edit_student, name='edit_student'),
     path('students/<int:s_id>/', student_account.student_account, name='student_account'),
     path('students/<int:s_id>/observations/', observations.observations, name='observations'),
+    path('students/<int:s_id>/edit-observation/<int:o_id>/', observations.edit_observation, name='edit_observation'),
     path('students/<int:s_id>/delete-observation/<int:o_id>/', observations.delete_observation,
          name='delete_observation'),
     path('students/<int:s_id>/delete-student/', student_account.delete_student, name='delete_student'),
