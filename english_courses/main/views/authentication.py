@@ -35,3 +35,7 @@ def login_user(request):
 
     return render(request, 'main/login.html', {'form': context['form']})
 
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
