@@ -19,7 +19,7 @@ def login_user(request):
                 if user.is_active:
                     login(request, user)
                     messages.success(request, 'You have been logged in successfully')
-                    if user.groups.filter(name='teacher').exists():
+                    if user.groups.filter(name='teacher').exists() or user.is_superuser:
                         return redirect('groups')
                     if user.groups.filter(name='student').exists():
                         return redirect('observations', s_id=user.id)
