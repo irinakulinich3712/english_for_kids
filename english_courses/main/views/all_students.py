@@ -12,6 +12,10 @@ from ..forms import CreateStudentForm
 from ..models import Student, StudentGroup
 
 
+def group_check(user):
+    return user.is_superuser or user.groups.filter(name='teacher').exists()
+
+
 def all_students(request):
     students_list = [dict(
         id=s['user_id'], first_name=s['user__first_name'], last_name=s['user__last_name'],
