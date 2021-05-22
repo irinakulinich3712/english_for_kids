@@ -136,6 +136,7 @@ SESSION_COOKIE_SECURE = False
 
 AUTH_USER_MODEL = 'main.CustomUser'
 
+LOGIN_URL = 'login'
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
