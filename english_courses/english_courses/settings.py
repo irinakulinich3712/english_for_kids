@@ -82,6 +82,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
+
     }
 }
 
@@ -134,3 +135,18 @@ CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
 
 AUTH_USER_MODEL = 'main.CustomUser'
+
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
