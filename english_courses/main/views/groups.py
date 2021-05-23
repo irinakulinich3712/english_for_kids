@@ -75,11 +75,12 @@ def group(request, g_id):
             edit_form = EditGroupForm(instance=group_obj)
 
         context = {
-            'edit_form': edit_form
+            'edit_form': edit_form,
+            'group': group_obj
         }
 
-        return render(request, 'main/group.html', {'group': group_obj, 'student_count': student_count,
-                                                   'edit_form':context['edit_form']})
+        return render(request, 'main/group.html', {'group': context['group'], 'student_count': student_count,
+                                                   'edit_form': context['edit_form']})
     except ObjectDoesNotExist:
         return HttpResponse("This group could not be found")
 

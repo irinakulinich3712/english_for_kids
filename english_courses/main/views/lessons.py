@@ -38,10 +38,11 @@ def lessons(request, g_id):
 
             context = {
                 'create_form': create_form,
-                'edit_form': edit_form
+                'edit_form': edit_form,
+                'group': group_obj
             }
 
-            return render(request, 'main/lessons.html', {'group_lessons': group_lessons_list, 'group': group_obj,
+            return render(request, 'main/lessons.html', {'group_lessons': group_lessons_list, 'group': context['group'],
                                                          'create_form': context['create_form'],
                                                          'edit_form': context['edit_form']})
         else:

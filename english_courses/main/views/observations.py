@@ -28,9 +28,6 @@ def observations(request, s_id):
         context = {
             'create_form': create_form,
             'edit_form': edit_form,
-        }
-
-        student = {
             'f_name': CustomUser.objects.get(id=s_id).first_name,
             'l_name': CustomUser.objects.get(id=s_id).last_name
         }
@@ -38,8 +35,8 @@ def observations(request, s_id):
         return render(request, 'main/observations.html', {'observations': observations_list,
                                                           'create_form': context['create_form'],
                                                           'edit_form': context['edit_form'],
-                                                          'student_id': s_id, 'f_name':student['f_name'],
-                                                          'l_name':student['l_name']})
+                                                          'student_id': s_id, 'f_name':context['f_name'],
+                                                          'l_name':context['l_name']})
     else:
         return redirect('login')
 

@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
-from django.core.serializers import serialize
 from django.shortcuts import render, redirect
 
 from .all_students import group_check
