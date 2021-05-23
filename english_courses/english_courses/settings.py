@@ -9,6 +9,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
+ADMINS = config('ADMINS')
 
 # Application definition
 
