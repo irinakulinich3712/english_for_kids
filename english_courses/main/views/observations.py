@@ -7,37 +7,41 @@ from ..forms import EditObservationForm, CreateObservationForm
 from ..models import Observation, CustomUser, Student
 
 
+@login_required
 def observations(request, s_id):
-    observations_list = Observation.objects.filter(student=s_id).order_by('-created_at')
-    edit_form = EditObservationForm()
+    if (request.user.id == s_id) or (request.user.groups.all()[0].name == 'teacher') or request.user.is_superuser:
+        observations_list = Observation.objects.filter(student=s_id).order_by('-created_at')
+        edit_form = EditObservationForm()
 
-    if request.method == 'POST':
-        create_form = CreateObservationForm(request.POST)
-        if create_form.is_valid():
-            create_form.instance.student = Student.objects.get(user_id=s_id)
-            create_form.save()
-            messages.success(request, "An observation has been created successfully")
-            return redirect('observations', s_id=s_id)
+        if request.method == 'POST':
+            create_form = CreateObservationForm(request.POST)
+            if create_form.is_valid():
+                create_form.instance.student = Student.objects.get(user_id=s_id)
+                create_form.save()
+                messages.success(request, "An observation has been created successfully")
+                return redirect('observations', s_id=s_id)
+            else:
+                messages.error(request, "The form has not been filled correctly")
+
         else:
-            messages.error(request, "The form has not been filled correctly")
+            create_form = CreateObservationForm()
+        context = {
+            'create_form': create_form,
+            'edit_form': edit_form,
+        }
 
+        student = {
+            'f_name': CustomUser.objects.get(id=s_id).first_name,
+            'l_name': CustomUser.objects.get(id=s_id).last_name
+        }
+
+        return render(request, 'main/observations.html', {'observations': observations_list,
+                                                          'create_form': context['create_form'],
+                                                          'edit_form': context['edit_form'],
+                                                          'student_id': s_id, 'f_name':student['f_name'],
+                                                          'l_name':student['l_name']})
     else:
-        create_form = CreateObservationForm()
-    context = {
-        'create_form': create_form,
-        'edit_form': edit_form,
-    }
-
-    student = {
-        'f_name': CustomUser.objects.get(id=s_id).first_name,
-        'l_name': CustomUser.objects.get(id=s_id).last_name
-    }
-
-    return render(request, 'main/observations.html', {'observations': observations_list,
-                                                      'create_form': context['create_form'],
-                                                      'edit_form': context['edit_form'],
-                                                      'student_id': s_id, 'f_name': student['f_name'],
-                                                      'l_name': student['l_name']})
+        return redirect('login')
 
 
 @user_passes_test(group_check)
