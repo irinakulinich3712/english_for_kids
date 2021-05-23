@@ -6,40 +6,46 @@ from datetime import datetime, timedelta
 
 from .all_students import group_check
 from ..forms import CreateLessonForm, EditLessonForm
-from ..models import StudentGroup, Lesson
+from ..models import StudentGroup, Lesson, Student
 from django.http import HttpResponse
 
 
+@login_required
 def lessons(request, g_id):
     try:
-        group_obj = StudentGroup.objects.get(id=g_id)
+        if (request.user.id in [s.user_id for s in Student.objects.filter(student_group_id=g_id)]) \
+                or request.user.groups.all()[0].name == 'teacher' or request.user.is_staff:
 
-        group_lessons_list = Lesson.objects.filter(student_group=g_id,
-                                                   created_at__gte=datetime.now() - timedelta(days=60)) \
-            .order_by('-created_at')
+            group_obj = StudentGroup.objects.get(id=g_id)
 
-        edit_form = EditLessonForm()
+            group_lessons_list = Lesson.objects.filter(student_group=g_id,
+                                                       created_at__gte=datetime.now() - timedelta(days=60)).order_by(
+                '-created_at')
 
-        if request.method == 'POST':
-            create_form = CreateLessonForm(request.POST)
-            if create_form.is_valid():
-                create_form.instance.student_group = StudentGroup.objects.get(id=g_id)
-                create_form.save()
-                messages.success(request, "The lesson has been created successfully")
+            edit_form = EditLessonForm()
+
+            if request.method == 'POST':
+                create_form = CreateLessonForm(request.POST)
+                if create_form.is_valid():
+                    create_form.instance.student_group = StudentGroup.objects.get(id=g_id)
+                    create_form.save()
+                    messages.success(request, "The lesson has been created successfully")
+                else:
+                    messages.error(request, "The form has been filled incorrectly")
             else:
-                messages.error(request, "The form has been filled incorrectly")
+
+                create_form = CreateLessonForm()
+
+            context = {
+                'create_form': create_form,
+                'edit_form': edit_form
+            }
+
+            return render(request, 'main/lessons.html', {'group_lessons': group_lessons_list, 'group': group_obj,
+                                                         'create_form': context['create_form'],
+                                                         'edit_form': context['edit_form']})
         else:
-
-            create_form = CreateLessonForm()
-
-        context = {
-            'create_form': create_form,
-            'edit_form': edit_form
-        }
-
-        return render(request, 'main/lessons.html', {'group_lessons': group_lessons_list, 'group': group_obj,
-                                                     'create_form': context['create_form'],
-                                                     'edit_form': context['edit_form']})
+            return redirect('login')
     except ObjectDoesNotExist:
         return HttpResponse("This groups does not exist")
 
