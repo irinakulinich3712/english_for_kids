@@ -14,7 +14,7 @@ from django.http import HttpResponse
 def lessons(request, g_id):
     try:
         if (request.user.id in [s.user_id for s in Student.objects.filter(student_group_id=g_id)]) \
-                or request.user.groups.all()[0].name == 'teacher' or request.user.is_staff:
+                or request.user.groups.all()[0].name == 'teacher' or request.user.is_superuser:
 
             group_obj = StudentGroup.objects.get(id=g_id)
 
