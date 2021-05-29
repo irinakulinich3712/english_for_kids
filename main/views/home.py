@@ -8,8 +8,7 @@ from ..models import Announcement
 
 
 def index(request):
-    announcements_list = Announcement.objects.filter(created_at__gte=datetime.now() - timedelta(days=60)).order_by(
-        'created_at')
+    announcements_list = Announcement.objects.filter(created_at__gte=datetime.now() - timedelta(days=60))
 
     if request.method == 'POST':
         create_form = CreateApplicationForm(request.POST)

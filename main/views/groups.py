@@ -43,8 +43,7 @@ def group_students(request, g_id):
         students_list = []
         for s in Student.objects.filter(student_group_id=g_id).select_related('user').values('user_id',
                                                                                              'user__last_name',
-                                                                                             'user__first_name'). \
-                order_by('user__last_name'):
+                                                                                             'user__first_name'):
             num += 1
             students_list.append(dict(num=num,
                                       id=s['user_id'], first_name=s['user__first_name'],

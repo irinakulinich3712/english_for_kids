@@ -12,8 +12,7 @@ from ..models import Announcement
 @user_passes_test(group_check)
 @login_required
 def announcements(request):
-    announcements_list = Announcement.objects.filter(created_at__gte=datetime.now() - timedelta(days=60)).order_by(
-        'created_at')
+    announcements_list = Announcement.objects.filter(created_at__gte=datetime.now() - timedelta(days=60))
     edit_form = EditAnnouncementForm()
 
     if request.method == 'POST':

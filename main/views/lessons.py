@@ -19,8 +19,7 @@ def lessons(request, g_id):
             group_obj = StudentGroup.objects.get(id=g_id)
 
             group_lessons_list = Lesson.objects.filter(student_group=g_id,
-                                                       created_at__gte=datetime.now() - timedelta(days=60)).order_by(
-                '-created_at')
+                                                       created_at__gte=datetime.now() - timedelta(days=60))
 
             edit_form = EditLessonForm()
 
@@ -70,10 +69,7 @@ def edit_lesson(request, g_id, l_id):
 @user_passes_test(group_check)
 @login_required
 def delete_lesson(request, g_id, l_id):
-    try:
-        lesson = Lesson.objects.get(id=l_id)
-        lesson.delete()
-        messages.success(request, "The lesson has been deleted successfully")
-    except ObjectDoesNotExist:
-        return HttpResponse("The lesson could not be found")
+    lesson = Lesson.objects.get(id=l_id)
+    lesson.delete()
+    messages.success(request, "The lesson has been deleted successfully")
     return redirect('lessons', g_id=g_id)

@@ -11,7 +11,7 @@ from ..models import Application
 @user_passes_test(group_check)
 @login_required
 def applications(request):
-    applications_list = Application.objects.order_by('-created_at')
+    applications_list = Application.objects.all()
     return render(request, 'main/applications.html', {'applications': applications_list})
 
 
