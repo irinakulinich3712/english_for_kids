@@ -24,8 +24,7 @@ def all_students(request):
         id=s['user_id'], first_name=s['user__first_name'], last_name=s['user__last_name'],
         student_group_id=s['student_group_id'], student_group="")
         for s in Student.objects.all().select_related('user').values('user_id', 'user__last_name',
-                                                                     'user__first_name', 'student_group_id').order_by(
-            'user__last_name', 'student_group__year')]
+                                                                     'user__first_name', 'student_group_id')]
 
     for s in students_list:
         if s['student_group_id'] is None:
@@ -40,11 +39,11 @@ def all_students(request):
 @user_passes_test(group_check)
 @login_required
 def new_student(request):
-    password_characters = string.ascii_letters + string.digits + string.punctuation
     if request.method == 'POST':
         create_form = CreateStudentForm(request.POST)
         if create_form.is_valid():
-            password_string = ''.join(random.choice(password_characters) for i in range(10))
+            password_string = ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation)
+                                      for i in range(10))
             password = make_password(password_string, hasher='default')
             create_form.save(password)
             user = create_form.cleaned_data.get('username')
