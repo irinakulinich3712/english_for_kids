@@ -2249,6 +2249,14 @@ to {
 } 
 
 @media (max-width: 500px) {
+    .data-card__text-data-item span {
+    word-break: break-all;
+    }
+
+     .data-card__text-data-item span:nth-child(1) {
+        flex: 0 0 35%;
+    }
+
   .data-card__card-top-visible {
   flex-direction: column;
   justify-content: center;
