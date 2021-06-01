@@ -56,6 +56,35 @@ def group_students(request, g_id):
 
 @user_passes_test(group_check)
 @login_required
+def choose_student(request):
+
+    students = [dict(
+        user_id=s['user_id'], user__last_name=s['user__last_name'],
+        user__first_name=s['user__first_name'], student_group_id=s['student_group_id'], student_group="")
+        for s in Student.objects.all().select_related('user').values('user_id', 'user__last_name',
+                                                                     'user__first_name', 'student_group_id')]
+    for s in students:
+        if s['student_group_id'] is None:
+            s['student_group'] = "No group"
+        else:
+            s['student_group'] = '%s%s' % (StudentGroup.objects.get(id=s['student_group_id']).year,
+                                           StudentGroup.objects.get(id=s['student_group_id']).name)
+
+    return HttpResponse(students, content_type="application/json")
+
+
+@user_passes_test(group_check)
+@login_required
+def add_student_to_group(request, g_id, s_id):
+    student = Student.objects.get(user_id=s_id)
+    student.student_group_id = g_id
+    messages.success(request, "The student has been added to this group")
+    student.save()
+    return redirect('group_students', g_id=g_id)
+
+
+@user_passes_test(group_check)
+@login_required
 def group(request, g_id):
     try:
         group_obj = StudentGroup.objects.get(id=g_id)
