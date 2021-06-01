@@ -83,7 +83,7 @@
                 {% for announcement in announcements %}
                     <div class="alert alert-warning mt-2" data-announcement-id={{el.id}}>
                        <div class="item">
-                        <span>date</span>
+                        <span>{{ announcement.created_at }}</span>
                         <div class="slideText">{{ announcement.announcement }}</div>
                       </div>
                     </div>
