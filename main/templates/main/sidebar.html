@@ -18,9 +18,9 @@
          <li class="sidebar-menu__item"><a class="sidebar-menu__link" href="{% url 'announcements' %}" id="sidebar-announcements"> <span class="fas sidebar-menu__icon fa-bullhorn"></span><span>Announcements</span></a></li>
          <li class="sidebar-menu__item"><a class="sidebar-menu__link" href="{% url 'applications' %}" id="sidebar-applications"> <span class="fas sidebar-menu__icon fa-envelope-open-text"></span><span>Applications</span></a></li>
          {% elif request.user.groups.all.0.name == 'student' %}
-         <li class="sidebar-menu__item"><a class="sidebar-menu__link" href="{% url 'observations'  request.user.id %}" id="sidebar-observations"> <span class="fas sidebar-menu__icon fa-envelope-open-text"></span><span>Observations</span></a></li>
+         <li class="sidebar-menu__item"><a class="sidebar-menu__link" href="{% url 'observations'  request.user.id %}" id="sidebar-observations"> <span class="fas sidebar-menu__icon fa-comment-dots"></span><span>Observations</span></a></li>
           {% if add_check_group == true %}
-          <li class="sidebar-menu__item"><a class="sidebar-menu__link" href="/groups/{% urlparam request.user.id %}/lessons/" id="sidebar-lessons"> <span class="fas sidebar-menu__icon fa-envelope-open-text"></span><span>Lessons</span></a></li>
+          <li class="sidebar-menu__item"><a class="sidebar-menu__link" href="/groups/{% urlparam request.user.id %}/lessons/" id="sidebar-lessons"> <span class="fas sidebar-menu__icon fa-book"></span><span>Lessons</span></a></li>
           {% endif %}
          {% endif %}
       </ul>
