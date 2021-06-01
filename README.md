@@ -2,6 +2,7 @@
 
 ## Setup
 
+Some of the project's configurations differ in the production version.
 In order to run this project locally, follow these steps:
 
 First of all, clone the repository:
@@ -17,6 +18,25 @@ Create a virtual environment to install dependencies in and activate it:
 python -m venv venv
 source venv/bin/activate
 ```
+Put the your .env file in the root of the project.
+
+In the settings.py change the following variables to this:
+
+```sh
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+# CSRF_COOKIE_SECURE = False
+#
+# SESSION_COOKIE_SECURE = False
+#
+# SECURE_SSL_REDIRECT = True
+#
+# SECURE_BROWSER_XSS_FILTER = True
+#
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+```
 
 Then install the dependencies:
 
@@ -25,7 +45,6 @@ Then install the dependencies:
 ```
 Once `pip` has finished downloading the dependencies:
 ```sh
-(env) cd project
 (env) python manage.py runserver
 ```
 And navigate to `http://127.0.0.1:8000/`.
