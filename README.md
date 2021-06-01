@@ -2,6 +2,8 @@
 
 ## Setup
 
+In order to run this project locally, follow these steps:
+
 First of all, clone the repository:
 
 ```sh
