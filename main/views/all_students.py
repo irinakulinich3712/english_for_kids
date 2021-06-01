@@ -22,10 +22,13 @@ def group_check(user):
 def all_students(request):
     students_list = [dict(
         id=s['user_id'], first_name=s['user__first_name'], last_name=s['user__last_name'],
-        student_group_id=s['student_group_id'], student_group="")
+        student_group_id=s['student_group_id'], student_group="", parent_f_name=s['parent_f_name'],
+        parent_patronimic=s['parent_patronimic'], parent_l_name=s['parent_l_name'],
+        parent_tel_numb=s['parent_tel_numb'])
         for s in Student.objects.all().select_related('user').values('user_id', 'user__last_name',
-                                                                     'user__first_name', 'student_group_id')]
-
+                                                                     'user__first_name', 'student_group_id',
+                                                                     'parent_f_name', 'parent_patronimic',
+                                                                     'parent_l_name', 'parent_tel_numb')]
     for s in students_list:
         if s['student_group_id'] is None:
             s['student_group'] = "No group"
