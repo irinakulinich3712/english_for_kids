@@ -1,50 +1,47 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
-    <title>English for kids</title>
-</head>
-<body>
-
-<div class="container">
-{% if messages %}
-   {% for message in messages %}
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
+      <title>English for kids</title>
+      <link rel="shortcut icon" type="image/png" href="{% static 'main/img/owl.png' %}"/>
+   </head>
+   <body>
+      <div class="container">
+         {% if messages %}
+         {% for message in messages %}
+         {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
          <div class="alert" id="success-message">
             <p>{{ message }}</p>
-        </div>
-        {% else %}
+         </div>
+         {% else %}
          <div class="alert" id="error-message">
             <p>{{ message }}</p>
-        </div>
-        {% endif %}
-   {% endfor %}
-{% endif %}
-
-    {% block content %}{% endblock %}
-</div>
-
-
-<script src="{% static 'main/js/modalWindowFunc.js' %}"></script>
-<script src="{% static 'main/js/search.js' %}"></script>
-<script src="{% static 'main/js/applicationExport.js' %}"></script>
-<script src="{% static 'main/js/fillSignupForm.js' %}"></script>
-<script src="{% static 'main/js/TabController.js' %}"></script>
-<script src="{% static 'main/js/loginForm.js' %}"></script>
-<script src="{% static 'main/js/addStudentToGroup.js' %}"></script>
-<script src="{% static 'main/js/sort.js' %}"></script>
-<script src="{% static 'main/js/dataCardOpen.js' %}"></script>
-<script src="{% static 'main/js/sortNontable.js' %}"></script>
-<script src="{% static 'main/js/burgerAcc.js' %}"></script>
-<script src="{% static 'main/js/burgerHome.js' %}"></script>
-<script src="{% static 'main/js/navMenu.js' %}"></script>
-<script src="{% static 'main/js/slider.js' %}"></script>
-<script src="{% static 'main/js/formController.js' %}"></script>
-<script src="{% static 'main/js/alert.js' %}"></script>
-<script src="https://kit.fontawesome.com/048f604fcf.js" crossorigin="anonymous"></script>
-</body>
+         </div>
+         {% endif %}
+         {% endfor %}
+         {% endif %}
+         {% block content %}{% endblock %}
+      </div>
+      <script src="{% static 'main/js/modalWindowFunc.js' %}"></script>
+      <script src="{% static 'main/js/search.js' %}"></script>
+      <script src="{% static 'main/js/applicationExport.js' %}"></script>
+      <script src="{% static 'main/js/fillSignupForm.js' %}"></script>
+      <script src="{% static 'main/js/TabController.js' %}"></script>
+      <script src="{% static 'main/js/loginForm.js' %}"></script>
+      <script src="{% static 'main/js/addStudentToGroup.js' %}"></script>
+      <script src="{% static 'main/js/sort.js' %}"></script>
+      <script src="{% static 'main/js/dataCardOpen.js' %}"></script>
+      <script src="{% static 'main/js/sortNontable.js' %}"></script>
+      <script src="{% static 'main/js/burgerAcc.js' %}"></script>
+      <script src="{% static 'main/js/burgerHome.js' %}"></script>
+      <script src="{% static 'main/js/navMenu.js' %}"></script>
+      <script src="{% static 'main/js/slider.js' %}"></script>
+      <script src="{% static 'main/js/formController.js' %}"></script>
+      <script src="{% static 'main/js/alert.js' %}"></script>
+      <script src="https://kit.fontawesome.com/048f604fcf.js" crossorigin="anonymous"></script>
+   </body>
 </html>
