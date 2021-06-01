@@ -12,22 +12,20 @@
           const dataBlock = this.dataCardSection.querySelectorAll('.data-card__card');
           const dataBlocks = Array.from(dataBlock);
 
-          // Sort each row
+
           const sortedBlocks = dataBlocks.sort((a, b) => {
-              const aDataBlocks = a.querySelector(`.${this.sortOption} aside span`).textContent.trim();
-              const bDataBlocks = b.querySelector(`.${this.sortOption} aside span`).textContent.trim();
+              const aDataBlocks = new Date(a.querySelector(`.${this.sortOption} aside span`).textContent.trim());
+              const bDataBlocks = new Date(b.querySelector(`.${this.sortOption} aside span`).textContent.trim());
 
               return aDataBlocks > bDataBlocks ? (1 * directionModifier) : (-1 * directionModifier);
           });
 
-          // Remove all tr's from the table
+
           while(this.dataCardSection.firstChild) {
             this.dataCardSection.removeChild(this.dataCardSection.firstChild)
           }
 
-          // Add sorted sorted rows
           this.dataCardSection.append(...sortedBlocks);
-          // Remember the way each column is sorted
 
           sortBtn.classList.remove('th-sort-asc', 'th-sort-desc');
           sortBtn.classList.toggle('th-sort-asc', this.asc);

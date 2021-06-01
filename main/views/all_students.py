@@ -1,5 +1,4 @@
 from smtplib import SMTPException
-
 from django.conf import settings
 import random
 import string
@@ -8,7 +7,6 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-
 from ..forms import CreateStudentForm
 from ..models import Student, StudentGroup
 

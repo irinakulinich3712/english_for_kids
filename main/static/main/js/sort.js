@@ -13,9 +13,18 @@
             const tBody = this.table.tBodies[0];
             const rows = Array.from(tBody.querySelectorAll('tr'));
 
+
             const sortedRows = rows.sort((a, b) => {
-                const aColumnText = a.querySelector(`td:nth-child(${ this.column + 1 })`).textContent.trim();
-                const bColumnText = b.querySelector(`td:nth-child(${ this.column + 1 })`).textContent.trim();
+                let aColumnText;
+                let bColumnText;
+                if (this.table.classList.contains('table-date') && this.column == 1) {
+                     aColumnText = new Date(a.querySelector(`td:nth-child(${ this.column + 1 })`).textContent.trim());
+                     bColumnText = new Date(b.querySelector(`td:nth-child(${ this.column + 1 })`).textContent.trim());
+                } else {
+                     aColumnText = a.querySelector(`td:nth-child(${ this.column + 1 })`).textContent.trim();
+                     bColumnText = b.querySelector(`td:nth-child(${ this.column + 1 })`).textContent.trim();
+                }
+
 
                 return aColumnText > bColumnText ? (1 * directionModifier) : (-1 * directionModifier);
             });
@@ -66,19 +75,3 @@
         document.querySelector('.table__sort-option--default').click();
     }
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
