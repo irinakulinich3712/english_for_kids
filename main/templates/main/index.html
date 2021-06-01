@@ -1,325 +1,300 @@
 {% extends 'main/base.html' %}
-
 {% load static %}
 {% block content %}
-    <div class="home-container">
-        <header class='home-header' id="header">
-            <nav class="navbar">
-                <div class="navbar__top">
-                  <h2>English For Kids</h2>
-                  <a target="_blank" class="auth-btn" href="{% url 'login' %}" >Login</a>
-                </div>
-                <div class="navbar__content">
-                    <ul class="navbar__menu-list">
-                        <div class="navbar__icon navbar__icon-cancel-btn">
-                            <i class="fas fa-times"></i>
+<div class="home-container">
+   <header class='home-header' id="header">
+      <nav class="navbar">
+         <div class="navbar__top">
+            <h2>English For Kids</h2>
+            <a target="_blank" class="auth-btn" href="{% url 'login' %}" >Login</a>
+         </div>
+         <div class="navbar__content">
+            <ul class="navbar__menu-list">
+               <div class="navbar__icon navbar__icon-cancel-btn">
+                  <i class="fas fa-times"></i>
+               </div>
+               <li>
+                  <a data-detector="about" class="navbar__menu-link" href="#about">About us</a>
+               </li>
+               <li>
+                  <a data-detector="news" class="navbar__menu-link" href="#news">Announcements</a>
+               </li>
+               <li>
+                  <a data-detector="methodology" class="navbar__menu-link" href="#methodology">Teaching methodology</a>
+               </li>
+               <li>
+                  <a data-detector="enrollment" class="navbar__menu-link" href="#enrollment">Enrollment conditions</a>
+               </li>
+               <li>
+                  <a data-detector="application" class="navbar__menu-link" href="#application">Send application</a>
+               </li>
+               <li>
+                  <a data-detector="contacts" class="navbar__menu-link" href="#contacts">Contacts</a>
+               </li>
+               <div class="bubble"></div>
+            </ul>
+         </div>
+         <div class="navbar__icon navbar__icon-menu-btn">
+            <i class=" fas fa-bars"></i>
+         </div>
+         <div class="progressbar">
+            <div class="progressbar-line"></div>
+         </div>
+      </nav>
+   </header>
+   <main>
+      <div class="main-container">
+         <section id="about" class="about detector">
+            <div class="about__left-block">
+               <h1>Кто мы</h1>
+               <p>
+                  Наши курсы - самые первые в городе. Основаны в 1990 году. Первыми курсантами были студенты нынешнего ХНУ. Через год был сделан пробный набор детей 4-5 лет.
+                  Принципы их обучения легли в основу всей последующей программы.
+               </p>
+               <p>После неуспешных попыток работы с нанятыми преподавателями, мы пришли к самостоятельному преподаванию, сделав бизнес семейным и являемся единственными постоянными преподавателями.</p>
+               <a href="#" class="about__link" >
+               Learn more
+               </a>
+            </div>
+            <div class="about__right-block">
+               <img class="main-block__img" src="{% static 'main/img/undraw_growth_analytics_8btt2.png' %}" alt="image">
+            </div>
+         </section>
+         <section id="news" class="slider">
+            <h1>Recent announcements</h1>
+            {% if announcements %}
+            {% for announcement in announcements %}
+            <div class="alert alert-warning mt-2" data-announcement-id={{el.id}}>
+               <div class="item">
+                  <span>{{ announcement.created_at }}</span>
+                  <div class="slideText">{{ announcement.announcement }}</div>
+               </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="slideText">No announcements at the moment</div>
+            {% endif %}
+            <a class="prev">&#10094;</a>
+            <a class="next">&#10095;</a>
+         </section>
+         <section id="methodology" class="methodology detector">
+            <div class="methodology__left-block">
+               <img class="main-block__img" src="{% static 'main/img/undraw_report_mx0a.svg' %}" alt="img">
+            </div>
+            <div class="methodology__right-block">
+               <h1>Методика обучения</h1>
+               <h2>Методика преподавания</h2>
+               <p>Беспереводная, без обращения к родному языку</p>
+               <h2>Принципы программы</h2>
+               <p>
+                  Курс рассчитан на 10 лет. С "ноля" до выпуска из школы (с подготовкой к выпускным экзаменам: ДПА, ЗНО и ко вступлению в ВУЗ: TOEFL и IELTS).
+               </p>
+               <p>Часовая нагрузка в неделю 180 минут с 2-го класса по 9-й, и до 240 минут в неделю для выпускников (в зависимости от текущей ситуации и возможности).
+               </p>
+               <a  href="#" class="methodology__link">Learn more</a>
+            </div>
+         </section>
+         <div class="line"></div>
+         <section id="enrollment" class="enrollment detector">
+            <div class="enrollment__left-block">
+               <h1>Условия поступления</h1>
+               <h2>Требования к поступающим</h2>
+               <ol>
+                  <p> Возраст 7-8 лет, только после 1-го класса (с развившейся усидчивостью и пониманием, что такое школа, домашние задания и дисциплина).
+                     Детей 9 лет и старше на первый год иногда берем с определнным условием
+                  </p>
+                  <p>Чем меньше у ребенка знаний по английскому при поступлении, тем лучше</p>
+                  <p>Тяжело учиться интровертам, некомандным ребятам и детям, не ходившим в садик в виду обилия компндной работы
+                  </p>
+               </ol>
+               <a href="#" class="enrollment__link">Learn more</a>
+            </div>
+            <div class="enrollment__right-block">
+               <img class="main-block__img" src="{% static 'main/img/enrollment-img3.svg' %}" alt="img">
+            </div>
+         </section>
+         <div class="line"></div>
+      </div>
+   </main>
+   <section id="application" class="application-form-block detector">
+      <div class="application-container">
+         <div class="application-content">
+            <div class="application-img">
+               <img src="{% static 'main/img/application-img.png' %}" alt="">
+            </div>
+            <form class="application-form" method="post">
+               {% csrf_token %}
+               <h2 class="title">Application form</h2>
+               <div class="inpput-wrapper">
+                  <div class="pt1">
+                     <div class="input-div">
+                        <div class="icon-block">
+                           <span class="fas fa-envelope"></span>
                         </div>
-                        <li>
-                            <a data-detector="about" class="navbar__menu-link" href="#about">About us</a>
-                        </li>
-                        <li>
-                            <a data-detector="news" class="navbar__menu-link" href="#news">Announcements</a>
-                        </li>
-                        <li>
-                            <a data-detector="methodology" class="navbar__menu-link" href="#methodology">Teaching methodology</a>
-                        </li>
-                        <li>
-                            <a data-detector="enrollment" class="navbar__menu-link" href="#enrollment">Enrollment conditions</a>
-                        </li>
-                        <li>
-                            <a data-detector="application" class="navbar__menu-link" href="#application">Send application</a>
-                        </li>
-                        <li>
-                            <a data-detector="contacts" class="navbar__menu-link" href="#contacts">Contacts</a>
-                        </li>
-                        <div class="bubble"></div>
-                    </ul>
-                </div>
-                <div class="navbar__icon navbar__icon-menu-btn">
-                  <i class=" fas fa-bars"></i>
-              </div>
-              <div class="progressbar">
-                <div class="progressbar-line"></div>
-              </div>
-            </nav>
-        </header>
-
-        <main>
-          <div class="main-container">
-            <section id="about" class="about detector">
-                    <div class="about__left-block">
-                        <h1>Кто мы</h1>
-                        <p>
-                          Наши курсы - самые первые в городе. Основаны в 1990 году. Первыми курсантами были студенты нынешнего ХНУ. Через год был сделан пробный набор детей 4-5 лет.
-                          Принципы их обучения легли в основу всей последующей программы.
-                        </p>
-                        <p>После неуспешных попыток работы с нанятыми преподавателями, мы пришли к самостоятельному преподаванию, сделав бизнес семейным и являемся единственными постоянными преподавателями.</p>
-                        <a href="#" class="about__link" >
-                            Learn more
-                        </a>
-                    </div>
-                    <div class="about__right-block">
-                        <img class="main-block__img" src="{% static 'main/img/undraw_growth_analytics_8btt2.png' %}" alt="image">
-                    </div>
-            </section>
-            <section id="news" class="slider">
-                <h1>Recent announcements</h1>
-             {% if announcements %}
-                {% for announcement in announcements %}
-                    <div class="alert alert-warning mt-2" data-announcement-id={{el.id}}>
-                       <div class="item">
-                        <span>{{ announcement.created_at }}</span>
-                        <div class="slideText">{{ announcement.announcement }}</div>
-                      </div>
-                    </div>
-                {% endfor %}
-
-             {% else %}
-                <div class="slideText">No announcements at the moment</div>
-             {% endif %}
-
-              <a class="prev">&#10094;</a>
-              <a class="next">&#10095;</a>
-
-            </section>
-            <section id="methodology" class="methodology detector">
-                    <div class="methodology__left-block">
-                        <img class="main-block__img" src="{% static 'main/img/undraw_report_mx0a.svg' %}" alt="img">
-                    </div>
-                    <div class="methodology__right-block">
-                        <h1>Методика обучения</h1>
-                        <h2>Методика преподавания</h2>
-                        <p>Беспереводная, без обращения к родному языку</p>
-                        <h2>Принципы программы</h2>
-                        <p>
-                          Курс рассчитан на 10 лет. С "ноля" до выпуска из школы (с подготовкой к выпускным экзаменам: ДПА, ЗНО и ко вступлению в ВУЗ: TOEFL и IELTS).
-                        </p>
-                        <p>Часовая нагрузка в неделю 180 минут с 2-го класса по 9-й, и до 240 минут в неделю для выпускников (в зависимости от текущей ситуации и возможности).
-                          </p>
-                        <a  href="#" class="methodology__link">Learn more</a>
-                    </div>
-            </section>
-            <div class="line"></div>
-
-            <section id="enrollment" class="enrollment detector">
-                    <div class="enrollment__left-block">
-                        <h1>Условия поступления</h1>
-                        <h2>Требования к поступающим</h2>
-                        <ol>
-                          <p> Возраст 7-8 лет, только после 1-го класса (с развившейся усидчивостью и пониманием, что такое школа, домашние задания и дисциплина).
-                              Детей 9 лет и старше на первый год иногда берем с определнным условием</p>
-                          <p>Чем меньше у ребенка знаний по английскому при поступлении, тем лучше</p>
-                          <p>Тяжело учиться интровертам, некомандным ребятам и детям, не ходившим в садик в виду обилия компндной работы
-                          </p>
-                        </ol>
-                        <a href="#" class="enrollment__link">Learn more</a>
-                    </div>
-                    <div class="enrollment__right-block">
-                        <img class="main-block__img" src="{% static 'main/img/enrollment-img3.svg' %}" alt="img">
-                    </div>
-            </section>
-            <div class="line"></div>
-          </div>
-        </main>
-        <section id="application" class="application-form-block detector">
-            <div class="application-container">
-                <div class="application-content">
-                  <div class="application-img">
-                    <img src="{% static 'main/img/application-img.png' %}" alt="">
+                        <div class="input-block">
+                           <h5>Child's name</h5>
+                           {{ create_form.f_name }}
+                        </div>
+                        {% for error in create_form.f_name.errors %}
+                        <p class="application-error">{{ error }}</p>
+                        {% endfor %}
+                        {% for nf_error in create_form.f_name.non_field_errors %}
+                        <p class="application-error">{{ nf_error }}</p>
+                        {% endfor %}
+                     </div>
+                     <div class="input-div">
+                        <div class="icon-block">
+                           <span class="fas fa-envelope"></span>
+                        </div>
+                        <div class="input-block">
+                           <h5>Child's last name</h5>
+                           {{ create_form.l_name }}
+                        </div>
+                        {% for error in create_form.f_name.errors %}
+                        <p class="application-error">{{ error }}</p>
+                        {% endfor %}
+                        {% for nf_error in create_form.f_name.non_field_errors %}
+                        <p class="application-error">{{ nf_error }}</p>
+                        {% endfor %}
+                     </div>
+                     <div class="input-div">
+                        <div class="icon-block">
+                           <span class="fas fa-envelope"></span>
+                        </div>
+                        <div class="input-block">
+                           <h5>Child's age</h5>
+                           {{ create_form.age }}
+                        </div>
+                        {% for error in create_form.f_name.errors %}
+                        <p class="application-error">{{ error }}</p>
+                        {% endfor %}
+                        {% for nf_error in create_form.f_name.non_field_errors %}
+                        <p class="application-error">{{ nf_error }}</p>
+                        {% endfor %}
+                     </div>
+                     <div class="input-div">
+                        <div class="icon-block">
+                           <span class="fas fa-envelope"></span>
+                        </div>
+                        <div class="input-block">
+                           <h5>Parent's name</h5>
+                           {{ create_form.parent_f_name }}
+                        </div>
+                        {% for error in create_form.f_name.errors %}
+                        <p class="application-error">{{ error }}</p>
+                        {% endfor %}
+                        {% for nf_error in create_form.f_name.non_field_errors %}
+                        <p class="application-error">{{ nf_error }}</p>
+                        {% endfor %}
+                     </div>
                   </div>
-                  <form class="application-form" method="post">
-                      {% csrf_token %}
-                    <h2 class="title">Application form</h2>
-                    <div class="inpput-wrapper">
-                      <div class="pt1">
-
-                          <div class="input-div">
-                          <div class="icon-block">
-                            <span class="fas fa-envelope"></span>
-                          </div>
-                          <div class="input-block">
-                            <h5>Child's name</h5>
-                              {{ create_form.f_name }}
-                          </div>
-                          {% for error in create_form.f_name.errors %}
-                                <p class="application-error">{{ error }}</p>
-                              {% endfor %}
-
-                              {% for nf_error in create_form.f_name.non_field_errors %}
-                                <p class="application-error">{{ nf_error }}</p>
-                              {% endfor %}
+                  <div class="pt2">
+                     <div class="input-div">
+                        <div class="icon-block">
+                           <span class="fas fa-envelope"></span>
                         </div>
-                        <div class="input-div">
-                          <div class="icon-block">
-                            <span class="fas fa-envelope"></span>
-                          </div>
-                          <div class="input-block">
-                            <h5>Child's last name</h5>
-                               {{ create_form.l_name }}
-
-                          </div>
-                          {% for error in create_form.f_name.errors %}
-                                <p class="application-error">{{ error }}</p>
-                              {% endfor %}
-
-                              {% for nf_error in create_form.f_name.non_field_errors %}
-                                <p class="application-error">{{ nf_error }}</p>
-                              {% endfor %}
+                        <div class="input-block">
+                           <h5>Parent's patronymic</h5>
+                           {{ create_form.parent_patronimic }}
+                           {% if create_form.parent_patronimic.help_text %}
+                           <small class="modal-form__input-helper modal-form__input-helper--application">
+                           {{ create_form.parent_patronimic.field.help_text }}
+                           </small>
+                           {% endif %}
                         </div>
-                        <div class="input-div">
-                          <div class="icon-block">
-                            <span class="fas fa-envelope"></span>
-                          </div>
-                          <div class="input-block">
-                            <h5>Child's age</h5>
-                               {{ create_form.age }}
-
-                          </div>
-                          {% for error in create_form.f_name.errors %}
-                                <p class="application-error">{{ error }}</p>
-                              {% endfor %}
-
-                              {% for nf_error in create_form.f_name.non_field_errors %}
-                                <p class="application-error">{{ nf_error }}</p>
-                              {% endfor %}
+                        {% for error in create_form.f_name.errors %}
+                        <p class="application-error">{{ error }}</p>
+                        {% endfor %}
+                        {% for nf_error in create_form.f_name.non_field_errors %}
+                        <p class="application-error">{{ nf_error }}</p>
+                        {% endfor %}
+                     </div>
+                     <div class="input-div">
+                        <div class="icon-block">
+                           <span class="fas fa-envelope"></span>
                         </div>
-                        <div class="input-div">
-                          <div class="icon-block">
-                            <span class="fas fa-envelope"></span>
-                          </div>
-                          <div class="input-block">
-                            <h5>Parent's name</h5>
-                               {{ create_form.parent_f_name }}
-
-                          </div>
-                          {% for error in create_form.f_name.errors %}
-                                <p class="application-error">{{ error }}</p>
-                              {% endfor %}
-
-                              {% for nf_error in create_form.f_name.non_field_errors %}
-                                <p class="application-error">{{ nf_error }}</p>
-                              {% endfor %}
+                        <div class="input-block">
+                           <h5>Parent's last name</h5>
+                           {{ create_form.parent_l_name }}
                         </div>
-                      </div>
-                      <div class="pt2">
-                        <div class="input-div">
-                          <div class="icon-block">
-                            <span class="fas fa-envelope"></span>
-                          </div>
-                          <div class="input-block">
-                            <h5>Parent's patronymic</h5>
-                               {{ create_form.parent_patronimic }}
-
-                              {% if create_form.parent_patronimic.help_text %}
-                                <small class="modal-form__input-helper modal-form__input-helper--application">
-                                    {{ create_form.parent_patronimic.field.help_text }}
-                                </small>
-                              {% endif %}
-
-                          </div>
-                          {% for error in create_form.f_name.errors %}
-                                <p class="application-error">{{ error }}</p>
-                              {% endfor %}
-
-                              {% for nf_error in create_form.f_name.non_field_errors %}
-                                <p class="application-error">{{ nf_error }}</p>
-                              {% endfor %}
+                        {% for error in create_form.f_name.errors %}
+                        <p class="application-error">{{ error }}</p>
+                        {% endfor %}
+                        {% for nf_error in create_form.f_name.non_field_errors %}
+                        <p class="application-error">{{ nf_error }}</p>
+                        {% endfor %}
+                     </div>
+                     <div class="input-div">
+                        <div class="icon-block">
+                           <span class="fas fa-envelope"></span>
                         </div>
-                        <div class="input-div">
-                          <div class="icon-block">
-                            <span class="fas fa-envelope"></span>
-                          </div>
-                          <div class="input-block">
-                            <h5>Parent's last name</h5>
-                               {{ create_form.parent_l_name }}
-
-                          </div>
-                          {% for error in create_form.f_name.errors %}
-                                <p class="application-error">{{ error }}</p>
-                              {% endfor %}
-
-                              {% for nf_error in create_form.f_name.non_field_errors %}
-                                <p class="application-error">{{ nf_error }}</p>
-                              {% endfor %}
+                        <div class="input-block">
+                           <h5>Parent's phone number</h5>
+                           {{ create_form.parent_tel_numb }}
                         </div>
-                        <div class="input-div">
-                          <div class="icon-block">
-                            <span class="fas fa-envelope"></span>
-                          </div>
-                          <div class="input-block">
-                            <h5>Parent's phone number</h5>
-                              {{ create_form.parent_tel_numb }}
-
-                          </div>
-                          {% for error in create_form.f_name.errors %}
-                                <p class="application-error">{{ error }}</p>
-                              {% endfor %}
-
-                              {% for nf_error in create_form.f_name.non_field_errors %}
-                                <p class="application-error">{{ nf_error }}</p>
-                              {% endfor %}
+                        {% for error in create_form.f_name.errors %}
+                        <p class="application-error">{{ error }}</p>
+                        {% endfor %}
+                        {% for nf_error in create_form.f_name.non_field_errors %}
+                        <p class="application-error">{{ nf_error }}</p>
+                        {% endfor %}
+                     </div>
+                     <div class="input-div">
+                        <div class="icon-block">
+                           <span class="fas fa-envelope"></span>
                         </div>
-                        <div class="input-div">
-                          <div class="icon-block">
-                            <span class="fas fa-envelope"></span>
-                          </div>
-                          <div class="input-block">
-                            <h5>Parent's e-mail</h5>
-                               {{ create_form.parent_email }}
-
-                          </div>
-                          {% for error in create_form.f_name.errors %}
-                                <p class="application-error">{{ error }}</p>
-                              {% endfor %}
-
-                              {% for nf_error in create_form.f_name.non_field_errors %}
-                                <p class="application-error">{{ nf_error }}</p>
-                              {% endfor %}
+                        <div class="input-block">
+                           <h5>Parent's e-mail</h5>
+                           {{ create_form.parent_email }}
                         </div>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn-form btn-form--orange" id="#login">Send</button>
-                  </form>
-                </div>
+                        {% for error in create_form.f_name.errors %}
+                        <p class="application-error">{{ error }}</p>
+                        {% endfor %}
+                        {% for nf_error in create_form.f_name.non_field_errors %}
+                        <p class="application-error">{{ nf_error }}</p>
+                        {% endfor %}
+                     </div>
+                  </div>
+               </div>
+               <button type="submit" class="btn-form btn-form--orange" id="#login">Send</button>
+            </form>
+         </div>
+      </div>
+   </section>
+   <footer id="contacts" class="detector">
+      <div class="footer__page-banner ">
+         <div class="footer__content ">
+            <div class="footer__left">
+               <h1>English For Kids</h1>
             </div>
-        </section>
-         <footer id="contacts" class="detector">
-            <div class="footer__page-banner ">
-                <div class="footer__content ">
-                    <div class="footer__left">
-                        <h1>English For Kids</h1>
-                    </div>
-                     <div class="footer__center">
-                        <div>
-                            <a target="_blank" href="https://www.google.com/maps/place/%D1%83%D0%BB.+%D0%A1%D0%B2%D0%BE%D0%B1%D0%BE%D0%B4%D1%8B,+2,+%D0%A5%D0%BC%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%86%D0%BA%D0%B8%D0%B9,+%D0%A5%D0%BC%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%86%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C,+29000/data=!4m2!3m1!1s0x47320655f2f60951:0xf0e83b91b171a670?sa=X&ved=2ahUKEwje3PzZl_HwAhW9gP0HHY4RBVsQ8gEwAHoECA4QAQ">
-                              <i class="fas fa-map-marker-alt"></i>
-                            </a>
-                            <p>Свободы ул. 2/1, Хмельницький, </br>Хмельницкая, 29000</p>
-                        </div>
-                    </div>
-                    <div class="footer__right">
-
-                        <div class="footer__phonemail">
-                            <div>
-                                <i class="fas fa-phone"></i>
-                                <p>+380977092507</p>
-                                <p>Кулинич Константин Павлович</p>
-
-                            </div>
-                            <div>
-                                <i class="fas fa-phone"></i>
-                                <p>+380689025932</p>
-                                <p>Оськола Оксана Петровна</p>
-                            </div>
-                            <div>
-                            <i class="fas fa-envelope"></i>
-                            <p><a>englishforkids.courses@gmail.com</a></p>
-                        </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div class="footer__center">
+               <div>
+                  <a target="_blank" href="https://www.google.com/maps/place/%D1%83%D0%BB.+%D0%A1%D0%B2%D0%BE%D0%B1%D0%BE%D0%B4%D1%8B,+2,+%D0%A5%D0%BC%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%86%D0%BA%D0%B8%D0%B9,+%D0%A5%D0%BC%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%86%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C,+29000/data=!4m2!3m1!1s0x47320655f2f60951:0xf0e83b91b171a670?sa=X&ved=2ahUKEwje3PzZl_HwAhW9gP0HHY4RBVsQ8gEwAHoECA4QAQ">
+                  <i class="fas fa-map-marker-alt"></i>
+                  </a>
+                  <p>Свободы ул. 2/1, Хмельницький, </br>Хмельницкая, 29000</p>
+               </div>
             </div>
-        </footer>
-    </div>
+            <div class="footer__right">
+               <div class="footer__phonemail">
+                  <div>
+                     <i class="fas fa-phone"></i>
+                     <p>+380977092507</p>
+                     <p>Кулинич Константин Павлович</p>
+                  </div>
+                  <div>
+                     <i class="fas fa-phone"></i>
+                     <p>+380689025932</p>
+                     <p>Оськола Оксана Петровна</p>
+                  </div>
+                  <div>
+                     <i class="fas fa-envelope"></i>
+                     <p><a>englishforkids.courses@gmail.com</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </footer>
+</div>
 {% endblock %}

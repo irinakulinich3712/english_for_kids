@@ -1,110 +1,93 @@
 {% extends 'main/base.html' %}
-
-
 {% block content %}
 
 <div class="md-modal md-effect-1" id="modal-create">
-  <div class="md-content">
-    <div class="modal-create__header">
-      <h2>Add new student</h2>
-    </div>
-    <div class="form-wrapper">
-
-
-    </div>
-    <div class="modal-create__buttons">
-      <div class="md-btn">Save</div>
-      <div class="md-btn md-close">Close</div>
-    </div>
-  </div>
+   <div class="md-content">
+      <div class="modal-create__header">
+         <h2>Add new student</h2>
+      </div>
+      <div class="form-wrapper">
+      </div>
+      <div class="modal-create__buttons">
+         <div class="md-btn">Save</div>
+         <div class="md-btn md-close">Close</div>
+      </div>
+   </div>
 </div>
 <div class="md-overlay"></div>
 <div class="conatiner">
-  {% include "main/accHeader.html"%}
-  {% include "main/sidebar.html"%}
-
-  <div class="main-content main-content--nav">
-    <h1>Group {{group.year}}{{group.name}}</h1>
-    <div class="data-card data-card--nav">
-      <div class="data-card__nav">
-          <ul>
-              <li class="data-card__nav-item">
+   {% include "main/accHeader.html"%}
+   {% include "main/sidebar.html"%}
+   <div class="main-content main-content--nav">
+      <h1>Group {{group.year}}{{group.name}}</h1>
+      <div class="data-card data-card--nav">
+         <div class="data-card__nav">
+            <ul>
+               <li class="data-card__nav-item">
                   <span></span>
                   <a class="data-card__nav-item-link" id="data-card-nav-group" href="{% url 'group' group.id %}">
-                      Group Info</a>
-              </li>
-
-             <li class="data-card__nav-item">
+                  Group Info</a>
+               </li>
+               <li class="data-card__nav-item">
                   <span></span>
                   <a class="data-card__nav-item-link" id="data-card-nav-students" href="{% url 'group_students' group.id %}">
-                      Students</a>
-              </li>
-
-              <li class="data-card__nav-item">
+                  Students</a>
+               </li>
+               <li class="data-card__nav-item">
                   <span></span>
                   <a class="data-card__nav-item-link" id="data-card-nav-homework" href="{% url 'lessons' group.id %}">
-                      Lessons</a>
-              </li>
-          </ul>
-      </div>
-      <div class="data-card__header data-card__header--add-student">
-          <div class="search-wrapper search-wrapper-autocomplete">
-              <input id="search-students-autocomplete" type="text" placeholder="Add student"/>
-              <div class="search-clear search-clear--hidden">&times;</div>
-              <div class="search-icon"><span class="fas fa-search"></span></div>
-              <div class="match-list"></div>
-              <div class="data-card__student-add-window">
-              <div class="data-card__student-add-name"></div>
+                  Lessons</a>
+               </li>
+            </ul>
+         </div>
+         <div class="data-card__header data-card__header--add-student">
+            <div class="search-wrapper search-wrapper-autocomplete">
+               <input id="search-students-autocomplete" type="text" placeholder="Add student"/>
+               <div class="search-clear search-clear--hidden">&times;</div>
+               <div class="search-icon"><span class="fas fa-search"></span></div>
+               <div class="match-list"></div>
+               <div class="data-card__student-add-window">
+                  <div class="data-card__student-add-name"></div>
                   <div class="data-card__student-add-buttons">
-                      <span data-student-add-id="" data-group-add-id={{group.id}} class="data-card__student-add-btn fas fa-user-check"></span>
-                      <span class="data-card__student-dec-btn fas fa-user-slash"></span>
+                     <span data-student-add-id="" data-group-add-id={{group.id}} class="data-card__student-add-btn fas fa-user-check"></span>
+                     <span class="data-card__student-dec-btn fas fa-user-slash"></span>
                   </div>
-              </div>
-          </div>
-
-      </div>
-
-      <div class="data-card__body">
-        {% if students %}
-        <table class="table table--multiple" width="100%">
-              <thead>
-                <tr>
-                    <th class="table__non-sort-option">Student's number</th>
-                    <th class="table__sort-option">Student's name</th>
-                    <th class="table__non-sort-option">Action</th>
-                </tr>
-              </thead>
-
-
-              <tbody>
-                {% for student in students %}
-                    <tr class="group-table__row table__row">
-                        <td class="searched-data" data-label="Student's number">{{student.num}}</td>
-                      <td class="searched-data" data-label="Student's name">{{student.first_name}} {{student.last_name}}</td>
-
-                      <td>
+               </div>
+            </div>
+         </div>
+         <div class="data-card__body">
+            {% if students %}
+            <table class="table table--multiple" width="100%">
+               <thead>
+                  <tr>
+                     <th class="table__non-sort-option">Student's number</th>
+                     <th class="table__sort-option">Student's name</th>
+                     <th class="table__non-sort-option">Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for student in students %}
+                  <tr class="group-table__row table__row">
+                     <td class="searched-data" data-label="Student's number">{{student.num}}</td>
+                     <td class="searched-data" data-label="Student's name">{{student.first_name}} {{student.last_name}}</td>
+                     <td>
                         <div class="table__row__see-data-btn table__row__remove-data-btn">
-                          <span></span>
-                          <a href="{% url 'student_account' student.id %}">See student</a>
-
-                            <span></span>
-                          <a href="{% url 'delete_student_from_group' group.id student.id %}">Remove student</a>
+                           <span></span>
+                           <a href="{% url 'student_account' student.id %}">See student</a>
+                           <span></span>
+                           <a href="{% url 'delete_student_from_group' group.id student.id %}">Remove student</a>
                         </div>
-                      </td>
-                    </tr>
-
+                     </td>
+                  </tr>
                   {% endfor %}
-              </tbody>
-        </table>
-           {% else %}
-          <h2 class="data-card__body-title data-card__body-title--no-data">There are no any students yet!</h2>
-           {% endif %}
-
+               </tbody>
+            </table>
+            {% else %}
+            <h2 class="data-card__body-title data-card__body-title--no-data">There are no any students yet!</h2>
+            {% endif %}
+         </div>
       </div>
-    </div>
-  </div>
-
+   </div>
 </div>
-
 
 {% endblock %}

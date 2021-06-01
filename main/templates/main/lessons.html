@@ -3,163 +3,151 @@
 {% block content %}
 
 <div class="md-modal md-effect-1" id="modal-create">
-  <div class="md-content">
-    <div class="modal-create__header">
-      <h2>Create new lesson</h2>
-    </div>
-    <div class="form-wrapper">
-
-        <form class="modal-form modal-form-create" method="post" >
+   <div class="md-content">
+      <div class="modal-create__header">
+         <h2>Create new lesson</h2>
+      </div>
+      <div class="form-wrapper">
+         <form class="modal-form modal-form-create" method="post" >
             {% csrf_token %}
             {% for field in create_form %}
             <p class="modal-form__input-container">
-              <span class="modal-form__input-container-label">{{ field.label_tag }}</span>
-              {{ field }}
-
-                {% for error in field.errors %}
-                <p style="color: red">{{ error }}</p>
-              {% endfor %}
-
+               <span class="modal-form__input-container-label">{{ field.label_tag }}</span>
+               {{ field }}
+               {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
             </p>
             {% endfor %}
             <div class="modal-create__buttons">
-                <button class="md-btn" type="submit">Save</button>
-
-                <div class="md-btn md-close">Close</div>
+               <button class="md-btn" type="submit">Save</button>
+               <div class="md-btn md-close">Close</div>
             </div>
-        </form>
-
-        <form class="modal-form modal-form-edit" method="post" action="">
+         </form>
+         <form class="modal-form modal-form-edit" method="post" action="">
             {% csrf_token %}
             {% for field in edit_form %}
             <p class="modal-form__input-container">
-              <span class="modal-form__input-container-label">{{ field.label_tag }}</span>
-              {{ field }}
-
-                {% for error in field.errors %}
-                <p style="color: red">{{ error }}</p>
-              {% endfor %}
-
+               <span class="modal-form__input-container-label">{{ field.label_tag }}</span>
+               {{ field }}
+               {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
             </p>
             {% endfor %}
-
             <div class="modal-create__buttons">
-                <button class="md-btn" type="submit">Save</button>
-                <div class="md-btn md-close">Close</div>
+               <button class="md-btn" type="submit">Save</button>
+               <div class="md-btn md-close">Close</div>
             </div>
          </form>
-
-        <div class="modal-form modal-form-confirm">
+         <div class="modal-form modal-form-confirm">
             <h2>Are you sure you want to delete this lesson?</h2>
             <div class="modal-create__buttons">
-                <div class="md-btn md-delete-data">
-                    <a href="">Delete lesson</a>
-                </div>
-                <div class="md-btn md-close">Close</div>
+               <div class="md-btn md-delete-data">
+                  <a href="">Delete lesson</a>
+               </div>
+               <div class="md-btn md-close">Close</div>
             </div>
          </div>
-    </div>
-
-  </div>
+      </div>
+   </div>
 </div>
 <div class="md-overlay"></div>
 <div class="conatiner">
-  {% include "main/accHeader.html"%}
-  {% include "main/sidebar.html"%}
-
-  <div class="main-content main-content--nav">
-    <h1>Group {{group.year}}{{group.name}}</h1>
-    <div class="data-card data-card--nav data-card--non-table">
-        {% if request.user.groups.all.0.name == 'teacher' or request.user.is_superuser %}
-      <div class="data-card__nav">
-          <ul>
-              <li class="data-card__nav-item">
+   {% include "main/accHeader.html"%}
+   {% include "main/sidebar.html"%}
+   <div class="main-content main-content--nav">
+      <h1>Group {{group.year}}{{group.name}}</h1>
+      <div class="data-card data-card--nav data-card--non-table">
+         {% if request.user.groups.all.0.name == 'teacher' or request.user.is_superuser %}
+         <div class="data-card__nav">
+            <ul>
+               <li class="data-card__nav-item">
                   <span></span>
                   <a class="data-card__nav-item-link" id="data-card-nav-group" href="{% url 'group' group.id %}">
-                      Group Info</a>
-              </li>
-
-             <li class="data-card__nav-item">
+                  Group Info</a>
+               </li>
+               <li class="data-card__nav-item">
                   <span></span>
                   <a class="data-card__nav-item-link" id="data-card-nav-students" href="{% url 'group_students' group.id %}">
-                      Students</a>
-              </li>
-
-              <li class="data-card__nav-item">
+                  Students</a>
+               </li>
+               <li class="data-card__nav-item">
                   <span></span>
                   <a class="data-card__nav-item-link" id="data-card-nav-homework" href="{% url 'lessons' group.id %}">
-                      Lessons</a>
-              </li>
-          </ul>
-      </div>
-      <div class="data-card__header">
-        <div class="data-card__buttons-wrapper">
-          <div data-header="Create new lesson" class="data-card__header-button md-trigger create-flag"><span class="fa fa-plus"></span>
-              <span>Create new lesson</span>
-          </div>
-          <div class="data-card__header-button data-card__sort-btn">
-              <span class="fas fa-sort-amount-up"></span>
-              <span>Sort by date</span>
-          </div>
-        </div>
-      </div>
+                  Lessons</a>
+               </li>
+            </ul>
+         </div>
          {% endif %}
-
-      <div class="data-card__body data-card__body--non-table">
-          {% if group_lessons %}
-          <h2 class="data-card__body-title data-card__body-title--non-table">Group's lessons</h2>
-          <div class="data-card__section">
-              {% for lesson in group_lessons %}
-                <div class="data-card__card">
+         <div class="data-card__header">
+            <div class="data-card__buttons-wrapper">
+               {% if request.user.groups.all.0.name == 'teacher' or request.user.is_superuser %}
+               <div data-header="Create new lesson" class="data-card__header-button md-trigger create-flag"><span class="fa fa-plus"></span>
+                  <span>Create new lesson</span>
+               </div>
+               {% endif %}
+               <div class="data-card__header-button data-card__sort-btn">
+                  <span class="fas fa-sort-amount-up"></span>
+                  <span>Sort by date</span>
+               </div>
+            </div>
+         </div>
+         <div class="data-card__body data-card__body--non-table">
+            {% if group_lessons %}
+            <h2 class="data-card__body-title data-card__body-title--non-table">Group's lessons</h2>
+            <div class="data-card__section">
+               {% for lesson in group_lessons %}
+               <div class="data-card__card">
                   <div class="data-card__card-top">
-                    <div class="data-card__card-top-visible">
-                      <div class="data-card__card-top-visible-img">
-                          <img src="{% static 'main/img/book.png' %}" alt="Lesson icon"/>
-                      </div>
-                      <aside>
-                        <h1>Lesson</h1>
-                        <span>{{ lesson.created_at }}</span>
-                      </aside>
-                      {% if request.user.groups.all.0.name == 'teacher' or request.user.is_superuser %}
-                      <div class="data-card__btn-block">
-                        <div data-header="Edit lesson" data-lesson-id={{lesson.id}} data-group-id={{group.id}} class="data-card__edit-btn md-trigger edit-flag multiple">
-                            <img src="{% static 'main/img/edit.png' %}" alt="Edit icon"/></div>
-                        <div data-header="Delete lesson" data-lesson-delete-id={{lesson.id}} data-group-delete-id={{group.id}} class="data-card__delete-btn md-trigger delete-flag multiple">
-                            <img src="{% static 'main/img/remove.png' %}" alt="Delete icon"/></div>
-                      </div>
-                     {% endif %}
-                      <div class="data-card__card-top-btn"><span>See more</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="0 0 48 48">
-                          <g class="nc-icon-wrapper" fill="#444444">
-                            <path d="M14.83 30.83L24 21.66l9.17 9.17L36 28 24 16 12 28z"></path>
-                          </g>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="data-card__card-top-hidden">
-                      <p>See less</p>
-                    </div>
+                     <div class="data-card__card-top-visible">
+                        <div class="data-card__card-top-visible-img">
+                           <img src="{% static 'main/img/book.png' %}" alt="Lesson icon"/>
+                        </div>
+                        <aside>
+                           <h1>Lesson</h1>
+                           <span>{{ lesson.created_at }}</span>
+                        </aside>
+                        {% if request.user.groups.all.0.name == 'teacher' or request.user.is_superuser %}
+                        <div class="data-card__btn-block">
+                           <div data-header="Edit lesson" data-lesson-id={{lesson.id}} data-group-id={{group.id}} class="data-card__edit-btn md-trigger edit-flag multiple">
+                              <img src="{% static 'main/img/edit.png' %}" alt="Edit icon"/>
+                           </div>
+                           <div data-header="Delete lesson" data-lesson-delete-id={{lesson.id}} data-group-delete-id={{group.id}} class="data-card__delete-btn md-trigger delete-flag multiple">
+                              <img src="{% static 'main/img/remove.png' %}" alt="Delete icon"/>
+                           </div>
+                        </div>
+                        {% endif %}
+                        <div class="data-card__card-top-btn">
+                           <span>See more</span>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="0 0 48 48">
+                              <g class="nc-icon-wrapper" fill="#444444">
+                                 <path d="M14.83 30.83L24 21.66l9.17 9.17L36 28 24 16 12 28z"></path>
+                              </g>
+                           </svg>
+                        </div>
+                     </div>
+                     <div class="data-card__card-top-hidden">
+                        <p>See less</p>
+                     </div>
                   </div>
                   <div class="data-card__card-bottom">
-                    <div class="data-card__card-bottom-content">
-                      <div class="data-card__card-bottom-text">
-                        <h1>Task</h1>
-                          <p data-edit="edit-lesson-task" class="data-card__data-edit">{{ lesson.task }}</p>
-                      </div>
-                    </div>
+                     <div class="data-card__card-bottom-content">
+                        <div class="data-card__card-bottom-text">
+                           <h1>Task</h1>
+                           <p data-edit="edit-lesson-task" class="data-card__data-edit">{{ lesson.task }}</p>
+                        </div>
+                     </div>
                   </div>
-                </div>
+               </div>
                {% endfor %}
-              </div>
-
-          {% else %}
-          <h2 class="data-card__body-title data-card__body-title--no-data">This group had no lessons lately!</h2>
-           {% endif %}
+            </div>
+            {% else %}
+            <h2 class="data-card__body-title data-card__body-title--no-data">This group had no lessons lately!</h2>
+            {% endif %}
+         </div>
       </div>
-    </div>
-  </div>
-
+   </div>
 </div>
-
 
 {% endblock %}
