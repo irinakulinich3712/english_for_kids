@@ -1,17 +1,63 @@
 {% extends 'main/base.html' %}
 
+
 {% block content %}
 
-<h1>Applications</h1>
-{% if applications %}
-{% for el in applications %}
-<div class="alert alert-warning mt-2">
-    <h3>{{el.created_at}}</h3>
-    <p>Child's name: {{el.f_name}} {{el.l_name}}</p>
-    <p>Age: {{el.age}}</p>
+<div class="conatiner">
+  {% include "main/accHeader.html"%}
+  {% include "main/sidebar.html"%}
+
+  <div class="main-content">
+    <div class="data-card" id="item_1">
+      <div class="data-card__header data-card__header--applications">
+        <div class="search-wrapper">
+          <input class="search-input" id="group-search" type="text" placeholder="Search by name"/>
+          <div class="search-clear">&times;</div>
+          <div class="search-icon"><span class="fas fa-search"></span></div>
+        </div>
+      </div>
+      <div class="data-card__body">
+
+        <table class="table table--multiple table--date" width="100%">
+          <thead>
+            <tr>
+              <th class="table__sort-option">Child's name</th>
+              <th class="table__non-sort-option">Child's age</th>
+              <th class="table__sort-option table__sort-option--default">Application time</th>
+                <th class="table__non-sort-option">Action</th>
+            </tr>
+          </thead>
+
+          {% if applications %}
+
+          <tbody>
+           {% for application in applications %}
+                <tr class="group-table__row table__row">
+                  <td class="searched-data" data-label="Child's name">{{application.f_name}} {{application.l_name}}</td>
+                    <td class="search-data" data-label="Child's age">{{application.age}}</td>
+                  <td data-label="Application time">{{application.created_at}} </td>
+                  <td>
+                    <div class="table__row__see-data-btn">
+                      <a href="{% url 'application' application.id %}">
+                        <span class="fas fa-eye"></span>
+
+                        See application</a>
+                    </div>
+                  </td>
+                </tr>
+
+              {% endfor %}
+          </tbody>
+          {% else %}
+              <p>There are no any applications yet!</p>
+          {% endif %}
+
+        </table>
+
+      </div>
+    </div>
+  </div>
 </div>
-{% endfor %}
-{% else %}
-<p>There are no applications at the moment!</p>
-{% endif %}
+
+
 {% endblock %}

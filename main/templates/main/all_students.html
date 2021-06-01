@@ -1,18 +1,74 @@
 {% extends 'main/base.html' %}
 
+
 {% block content %}
 
-{% if students %}
-{% for el in students %}
-<div class="alert alert-warning mt-2">
-    <h3>{{el.last_name}} {{el.first_name}}</h3>
-    <h2>{{el.student_group}}</h2>
-</div>
-{% endfor %}
-{% else %}
-<p>You have no students at the moment!</p>
-{% endif %}
+<div class="conatiner">
+  {% include "main/accHeader.html"%}
+  {% include "main/sidebar.html"%}
 
+  <div class="main-content">
+    <div class="data-card" id="item_1">
+      <div class="data-card__header">
+        <div class="data-card__buttons-wrapper">
+          <div class="data-card__header-button" id="create-student">
+              <span class="fa fa-plus"></span>
+            <span><a href="{% url 'new_student' %}">Create Student</a></span></div>
+        </div>
+        <div class="search-wrapper">
+          <input class="search-input" id="group-search" type="text" placeholder="Search by student's name"/>
+          <div class="search-clear">&times;</div>
+          <div class="search-icon"><span class="fas fa-search"></span></div>
+        </div>
+      </div>
+      <div class="data-card__body">
+
+        <table class="table table--multiple"  width="100%">
+          <thead>
+            <tr>
+              <th class="table__sort-option">Student's name</th>
+              <th class="table__sort-option table__sort-option--default">Student's group</th>
+              <th class="table__sort-option">Student's parent</th>
+              <th class="table__non-sort-option">Phone number</th>
+                <th class="table__non-sort-option">Action</th>
+            </tr>
+          </thead>
+          {% if students %}
+
+          <tbody>
+            {% for student in students %}
+                <tr class="group-table__row table__row">
+                  <td class="searched-data" data-label="Student's name">{{student.first_name}} {{student.last_name}}</td>
+                    <td class="search-data" data-label="Student's group">{{student.student_group}}</td>
+                  <td data-label="Student's parent">{{student.parent_f_name}}
+                      {% if student.parent_patronimic %}
+                        {{student.parent_patronimic}}
+                      {% endif %}
+                      {{student.parent_l_name}}
+                  </td>
+                  <td data-label="Phone number">{{student.parent_tel_numb}}</td>
+                  <td>
+                    <div class="table__row__see-data-btn">
+                      <a href="{% url 'student_account' student.id %}">
+                        <span class="fas fa-eye"></span>
+
+                        See student</a>
+                    </div>
+                  </td>
+                </tr>
+
+              {% endfor %}
+          </tbody>
+           {% else %}
+              <p>There are no any students yet!</p>
+          {% endif %}
+
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
 
 
 {% endblock %}

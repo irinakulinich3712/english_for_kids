@@ -3,34 +3,52 @@
 
 {% block content %}
 
-<h1>New student</h1>
 
-<form method="post">
+<div class="conatiner">
+  {% include "main/accHeader.html"%}
+  {% include "main/sidebar.html"%}
+
+  <div class="main-content">
+    <div class="data-card data-card--non-table">
+      <div class="data-card__header">
+
+      </div>
+
+      <div class="data-card__body">
+          <h2 class="data-card__body-title data-card__body-title--non-table">New student</h2>
+
+          <form class="create-student-form" method="post">
     {% csrf_token %}
     {% for field in create_form %}
-    <p>
-      {{ field.label_tag }}<br>
-      {{ field }}
-      {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-      {% endif %}
-      {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-
-    {% for nf_error in create_form.non_field_errors %}
-        <p style="color: red">{{ nf_error }}</p>
-      {% endfor %}
 
 
+     <div class="modal-form__input-container">{{ field }}
+         <span class="input-container-label">{{ field.label_tag }}</span>
 
-    </p>
+         {% for error in field.errors %}
+            <p class="modal-form__input-error">{{ error }}</p>
+         {% endfor %}
+
+        {% for nf_error in create_form.non_field_errors %}
+            <p class="modal-form__input-error">{{ nf_error }}</p>
+        {% endfor %}
+        {% if field.help_text %}
+            <small class="modal-form__input-helper">{{ field.help_text }}</small>
+        {% endif %}
+     </div>
+
+
+
   {% endfor %}
-    <button type="submit">Save</button>
+    <button class="create-new-student-btn" type="submit">Save</button>
 </form>
 
 
+      </div>
+    </div>
+  </div>
 
+</div>
 
 
 {% endblock %}

@@ -1,22 +1,106 @@
 {% extends 'main/base.html' %}
 
+
 {% block content %}
 
-{% if application %}
+<div class="md-modal md-effect-1" id="modal-create">
+  <div class="md-content">
+    <div class="modal-create__header">
+      <h2>Delete application</h2>
+      <div class="md-close--cross md-close">Close</div>
+    </div>
+    <div class="form-wrapper">
+        <div class="modal-form modal-form-confirm">
+            <h2>Are you sure you want to delete this application?</h2>
+            <div class="modal-create__buttons">
+                <div class="md-btn md-delete-data">
+                    <a href="">Delete application</a>
+                </div>
+                <div class="md-btn md-close">Close</div>
+            </div>
+         </div>
+    </div>
 
-<button> <a href="{% url 'delete_application' application.id %}">Delete</a> </button>
-
-<div class="alert alert-warning mt-2">
-    <h3>{{application.created_at}}</h3>
-    <p>Child's name: {{application.f_name}} {{application.l_name}}</p>
-    <p>Age: {{application.age}}</p>
-    <p>Parent's name: {{application.parent_f_name}}
-     {% if application.parent_patronimic %} {{application.parent_patronimic}} {% endif %}
-        {{application.parent_l_name}}</p>
-    <p>Parent's telephone number: {{application.parent_tel_numb}}</p>
-     <p>Parent's e-mail address: {{application.parent_email}}</p>
+  </div>
 </div>
-{% else %}
-<p>There are no applications at the moment!</p>
-{% endif %}
+<div class="md-overlay"></div>
+<div class="conatiner">
+  {% include "main/accHeader.html"%}
+  {% include "main/sidebar.html"%}
+
+  <div class="main-content">
+    <div class="data-card" id="item_1">
+      <div class="data-card__header">
+        <div class="data-card__buttons-wrapper">
+          <div class="data-card__header-button application-export"
+               id="create-student">
+              <span class="fa fa-plus"></span>
+              <span>Create Student</span>
+          </div>
+
+          <div data-application-delete-id={{application.id}} class="md-trigger delete-flag data-card__header-button data-card__header-button--red">
+              <span class="far fa-trash-alt"></span>
+              <span> Delete application </span>
+            </div>
+
+        </div>
+      </div>
+      <div class="data-card__body">
+        <h2 class="data-card__body-title">Application data</h2>
+
+        {% if application %}
+          <table class="table" width="100%">
+            <tbody>
+              <tr>
+                <td>Child's first name</td>
+                <td class="application-data" data-td="student-first-name">{{application.f_name}}</td>
+              </tr>
+
+              <tr>
+                <td>Child's last name</td>
+                <td class="application-data" data-td="student-last-name">{{application.l_name}}</td>
+              </tr>
+
+              <tr>
+                <td>Age</td>
+                <td>{{application.age}}</td>
+              </tr>
+
+              <tr>
+                <td>Parent's e-mail</td>
+                <td class="application-data" data-td="student-email">{{application.parent_email}}</td>
+              </tr>
+
+              <tr>
+                <td>Parent's first name</td>
+                <td class="application-data" data-td="parent-first-name">{{application.parent_f_name}}</td>
+              </tr>
+              {% if application.parent_patronimic is not none %}
+              <tr>
+                <td>Parent's patronimic</td>
+                <td class="application-data" data-td="parent-patronymic">
+                        {{ application.parent_patronimic }}
+                </td>
+              </tr>
+              {% endif %}
+
+              <tr>
+                <td>Parent's last name</td>
+                <td class="application-data" data-td="parent-last-name">{{application.parent_l_name}}</td>
+              </tr>
+
+              <tr>
+                <td>Parent's phone number</td>
+                <td class="application-data" data-td="phone-number">{{application.parent_tel_numb}}</td>
+              </tr>
+
+            </tbody>
+          </table>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
 {% endblock %}

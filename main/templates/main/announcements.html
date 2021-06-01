@@ -1,55 +1,125 @@
 {% extends 'main/base.html' %}
-
+{% load static %}
 {% block content %}
 
-<h1>Current announcement</h1>
-{% if announcements %}
-{% for el in announcements %}
-<div class="alert alert-warning mt-2" >
-    <h3>{{ el.created_at }}</h3>
-    <p>{{ el.announcement }}</p>
-    <button> <a href="{% url 'delete_announcement' el.id %}">Delete</a> </button>
+<div class="md-modal md-effect-1" id="modal-create">
+  <div class="md-content">
+    <div class="modal-create__header">
+      <h2>Create new announcement</h2>
+    </div>
+    <div class="form-wrapper">
+
+        <form class="modal-form modal-form-create" method="post" >
+            {% csrf_token %}
+            {% for field in create_form %}
+            <p class="modal-form__input-container">
+              <span class="modal-form__input-container-label">{{ field.label_tag }}</span>
+              {{ field }}
+
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+
+            </p>
+            {% endfor %}
+            <div class="modal-create__buttons">
+                <button class="md-btn" type="submit">Save</button>
+                <div class="md-btn md-close">Close</div>
+            </div>
+        </form>
+
+        <form class="modal-form modal-form-edit" method="post" action="">
+            {% csrf_token %}
+            {% for field in edit_form %}
+            <p class="modal-form__input-container">
+              <span class="modal-form__input-container-label">{{ field.label_tag }}</span>
+              {{ field }}
+
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+
+            </p>
+            {% endfor %}
+
+            <div class="modal-create__buttons">
+                <button class="md-btn" type="submit">Save</button>
+                <div class="md-btn md-close">Close</div>
+            </div>
+         </form>
+
+        <div class="modal-form modal-form-confirm">
+            <h2>Are you sure you want to delete this announcement?</h2>
+            <div class="modal-create__buttons">
+                <div class="md-btn md-delete-data">
+                    <a href="">Delete announcement</a>
+                </div>
+                <div class="md-btn md-close">Close</div>
+            </div>
+         </div>
+    </div>
+
+  </div>
 </div>
-{% endfor %}
-{% else %}
-<p>There are no announcements at the moment!</p>
-{% endif %}
+<div class="md-overlay"></div>
+<div class="conatiner">
+  {% include "main/accHeader.html"%}
+  {% include "main/sidebar.html"%}
 
-<h1>Create new announcement</h1>
-<form method="post" >
-    {% csrf_token %}
-    {% for field in create_form %}
-    <p>
-      {{ field.label_tag }}<br>
-      {{ field }}
-      {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-      {% endif %}
-      {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </p>
-  {% endfor %}
-    <button type="submit">Save</button>
-</form>
+  <div class="main-content">
+    <div class="data-card data-card--non-table">
+      <div class="data-card__header">
+        <div class="data-card__buttons-wrapper">
+          <div data-header="Create new announcement" class="data-card__header-button md-trigger create-flag">
+              <span class="fa fa-plus"></span>
+              <span>Create new announcement</span>
+          </div>
 
-<h1>Edit announcement</h1>
-<form method="post" >
-    {% csrf_token %}
-    {% for field in edit_form %}
-    <p>
-      {{ field.label_tag }}<br>
-      {{ field }}
-      {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-      {% endif %}
-      {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </p>
-  {% endfor %}
-    <button type="submit">Save</button>
-</form>
+          <div class="data-card__header-button data-card__sort-btn">
+              <span class="fas fa-sort-amount-up"></span>
+              <span>Sort by date</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-card__body data-card__body--non-table">
+          {% if announcements %}
+          <h2 class="data-card__body-title data-card__body-title--non-table">Current announcements</h2>
+          <div class="data-card__section data-card__section--scrolled">
+              {% for announcement in announcements %}
+                <div class="data-card__card">
+                  <div class="data-card__card-top">
+                    <div class="data-card__card-top-visible">
+                      <div class="data-card__card-top-visible-img">
+                          <img src="{% static 'main/img/announcement.png' %}" alt="Announcement icon"/>
+                      </div>
+                      <aside>
+                        <h1>Announcement</h1>
+                        <span>{{ announcement.created_at }}</span>
+                      </aside>
+                      <div class="data-card__btn-block">
+                        <div data-header="Edit announcement" data-announcement-id={{announcement.id}} class="data-card__edit-btn md-trigger edit-flag multiple">
+                            <img src="{% static 'main/img/edit.png' %}" alt="Edit icon"/></div>
+                        <div data-header="Delete announcement" data-announcement-delete-id={{announcement.id}} class="data-card__delete-btn md-trigger delete-flag multiple">
+                            <img src="{% static 'main/img/remove.png' %}" alt="Delete icon"/></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="data-card__card-text">
+                      <p data-edit="edit-announcement" class="data-card__data-edit">{{ announcement.announcement }}</p>
+                  </div>
+                </div>
+               {% endfor %}
+              </div>
+
+          {% else %}
+          <h2 class="data-card__body-title data-card__body-title--no-data">There are no current announcements!</h2>
+           {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
 
 
 {% endblock %}

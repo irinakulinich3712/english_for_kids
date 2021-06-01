@@ -8,11 +8,10 @@ from django.forms import ModelForm, TextInput, Textarea, EmailInput, Select, Mod
     NumberInput, CharField, EmailField, PasswordInput
 
 
-class CreateGroupForm(ModelForm):
+class EditGroupForm(ModelForm):
     class Meta:
         model = StudentGroup
         fields = ["year", "name"]
-
         widgets = {
             "year": NumberInput(attrs={
                 'class': 'modal-form__input',
@@ -25,10 +24,11 @@ class CreateGroupForm(ModelForm):
         }
 
 
-class EditGroupForm(ModelForm):
+class CreateGroupForm(ModelForm):
     class Meta:
         model = StudentGroup
         fields = ["year", "name"]
+
         widgets = {
             "year": NumberInput(attrs={
                 'class': 'modal-form__input',
@@ -143,7 +143,7 @@ class CreateApplicationForm(ModelForm):
         parent_tel_numb = self.cleaned_data["parent_tel_numb"]
 
         if not parent_tel_numb.isdecimal():
-            raise ValidationError("Telephone number should only contain digits")
+            raise ValidationError("Phone number should only contain digits")
         return parent_tel_numb
 
     def clean_parent_f_name(self):
@@ -156,8 +156,9 @@ class CreateApplicationForm(ModelForm):
     def clean_parent_patronimic(self):
         parent_patronimic = self.cleaned_data["parent_patronimic"]
 
-        if not parent_patronimic.isalpha():
-            raise ValidationError("The patronimic should only contain letters")
+        if len(parent_patronimic) > 0:
+            if not parent_patronimic.isalpha():
+                raise ValidationError("The patronymic should only contain letters")
         return parent_patronimic
 
     def clean_parent_l_name(self):
@@ -176,97 +177,95 @@ class CreateApplicationForm(ModelForm):
 
         widgets = {
             "f_name": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': "Enter the child's first name",
+                'class': 'form__input',
                 'label': "Child's first name"
             }),
 
             "l_name": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': "Enter the child's last name",
+                'class': 'form__input',
                 'label': "Child's last name"
             }),
 
             "age": NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': "Enter the child's age",
+                'class': 'form__input',
                 'label': "Child's age"
             }),
 
-
-            "parent_tel_numb": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': "Enter the parent's telephone number",
-                'label': "Parent's telephone number",
-                'minlength': 10
-            }),
-
-            "parent_email": EmailInput(attrs={
-                'class': 'form-control',
-                'placeholder': "Enter the parent's email",
-                'label': "Parent's e-mail"
-            }),
-
             "parent_f_name": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': "Enter the parent's first name",
+                'class': 'form__input',
                 'label': "Parent's first name"
             }),
 
             "parent_patronimic": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': "Enter the parent's patronimic",
-                'label': "Parent's patronimic"
+                'class': 'form__input',
+                'label': "Parent's patronymic"
             }),
 
             "parent_l_name": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': "Enter the parent's last name",
+                'class': 'form__input',
                 'label': "Parent's last name"
             }),
+
+            "parent_tel_numb": TextInput(attrs={
+                'class': 'form__input',
+                'label': "Parent's phone number",
+                'minlength': 10
+            }),
+
+            "parent_email": EmailInput(attrs={
+                'class': 'form__input',
+                'label': "Parent's e-mail"
+            })
         }
 
 
 class CreateStudentForm(UserCreationForm):
     username = CharField(max_length=20, label="Username", widget=TextInput(attrs={
-        'class': 'form-control',
+        'class': 'modal-form__input',
         'placeholder': "Enter a username"
     }))
     first_name = CharField(max_length=20, label="First name", widget=TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': "Enter the student's first name"
+        'class': 'modal-form__input',
+        'placeholder': "Enter the student's first name",
+        'id': "student-first-name"
     }))
     last_name = CharField(max_length=30, label="Last name", widget=TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': "Enter the student's last name"
+        'class': 'modal-form__input',
+        'placeholder': "Enter the student's last name",
+        'id': "student-last-name"
     }))
     email = EmailField(max_length=200, label="E-mail", widget=EmailInput(attrs={
-        'class': 'form-control',
-        'placeholder': "Enter the parent's e-mail address"
+        'class': 'modal-form__input',
+        'placeholder': "Enter the parent's e-mail address",
+        'id': "student-email"
     }))
     parent_f_name = CharField(max_length=20, label="Parent's first name", widget=TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': "Enter the parent's first name"
+        'class': 'modal-form__input',
+        'placeholder': "Enter the parent's first name",
+        'id': "parent-first-name"
     }))
-    parent_patronimic = CharField(max_length=30, label="Parent's patronimic", required=False,
-                                  help_text="Parent's patronimic can be omitted", widget=TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': "Enter the parent's patronimic"
+    parent_patronimic = CharField(max_length=30, label="Parent's patronymic", required=False,
+                                  help_text="Parent's patronymic can be omitted", widget=TextInput(attrs={
+            'class': 'modal-form__input',
+            'placeholder': "Enter the parent's patronymic",
+            'id': "parent-patronymic"
         }))
     parent_l_name = CharField(max_length=30, label="Parent's last name", widget=TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': "Enter the parent's last name"
+        'class': 'modal-form__input',
+        'placeholder': "Enter the parent's last name",
+        'id': "parent-last-name"
     }))
-    parent_tel_numb = CharField(max_length=10, min_length=10, label="Parent's telephone number",
+    parent_tel_numb = CharField(max_length=10, min_length=10, label="Parent's phone number",
                                 widget=TextInput(attrs={
-                                    'class': 'form-control',
-                                    'placeholder': "Enter the parent's telephone number"
+                                    'class': 'modal-form__input',
+                                    'placeholder': "Enter the parent's phone number",
+                                    'id': "phone-number"
                                 }))
 
     student_group = ModelChoiceField(queryset=StudentGroup.objects.all(), label="Student group",
                                      required=False, help_text="Student's group can be omitted",
                                      widget=Select(attrs={
-                                         'class': 'form-control',
+                                         'class': 'select-group',
                                          'placeholder': "Choose the student's groups"
                                      }))
 
@@ -288,7 +287,7 @@ class CreateStudentForm(UserCreationForm):
         parent_tel_numb = self.cleaned_data["parent_tel_numb"]
 
         if not parent_tel_numb.isdecimal():
-            raise ValidationError("Telephone number should only contain digits")
+            raise ValidationError("Phone number should only contain digits")
         return parent_tel_numb
 
     def clean_parent_f_name(self):
@@ -301,8 +300,9 @@ class CreateStudentForm(UserCreationForm):
     def clean_parent_patronimic(self):
         parent_patronimic = self.cleaned_data["parent_patronimic"]
 
-        if not parent_patronimic.isalpha():
-            raise ValidationError("The patronimic should only contain letters")
+        if len(parent_patronimic) > 0:
+            if not parent_patronimic.isalpha():
+                raise ValidationError("The patronymic should only contain letters")
         return parent_patronimic
 
     def clean_parent_l_name(self):
@@ -343,19 +343,19 @@ class CreateStudentForm(UserCreationForm):
 
 class EditUserForm(ModelForm):
     username = CharField(max_length=20, label="Username", widget=TextInput(attrs={
-        'class': 'form-control',
+        'class': 'modal-form__input',
         'placeholder': "Enter a username"
     }))
     first_name = CharField(max_length=20, label="First name", widget=TextInput(attrs={
-        'class': 'form-control',
+        'class': 'modal-form__input',
         'placeholder': "Enter the student's first name"
     }))
     last_name = CharField(max_length=30, label="Last name", widget=TextInput(attrs={
-        'class': 'form-control',
+        'class': 'modal-form__input',
         'placeholder': "Enter the student's last name"
     }))
     email = EmailField(max_length=200, label="E-mail", widget=EmailInput(attrs={
-        'class': 'form-control',
+        'class': 'modal-form__input',
         'placeholder': "Enter the parent's e-mail address"
     }))
 
@@ -380,28 +380,28 @@ class EditUserForm(ModelForm):
 
 class EditStudentForm(ModelForm):
     parent_f_name = CharField(max_length=20, label="Parent's first name", widget=TextInput(attrs={
-        'class': 'form-control',
+        'class': 'modal-form__input',
         'placeholder': "Enter the parent's first name"
     }))
-    parent_patronimic = CharField(max_length=30, label="Parent's patronimic", required=False,
-                                  help_text="Parent's patronimic can be omitted", widget=TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': "Enter the parent's patronimic"
+    parent_patronimic = CharField(max_length=30, label="Parent's patronymic", required=False,
+                                  help_text="Parent's patronymic can be omitted", widget=TextInput(attrs={
+            'class': 'modal-form__input',
+            'placeholder': "Enter the parent's patronymic"
         }))
     parent_l_name = CharField(max_length=30, label="Parent's last name", widget=TextInput(attrs={
-        'class': 'form-control',
+        'class': 'modal-form__input',
         'placeholder': "Enter the parent's last name"
     }))
-    parent_tel_numb = CharField(max_length=10, min_length=10, label="Parent's telephone number",
+    parent_tel_numb = CharField(max_length=10, min_length=10, label="Parent's phone number",
                                 widget=TextInput(attrs={
-                                    'class': 'form-control',
-                                    'placeholder': "Enter the parent's telephone number"
+                                    'class': 'modal-form__input',
+                                    'placeholder': "Enter the parent's phone number"
                                 }))
 
     student_group = ModelChoiceField(queryset=StudentGroup.objects.all(), label="Student group",
                                      required=False, help_text="Student's group can be omitted",
                                      widget=Select(attrs={
-                                         'class': 'form-control',
+                                         'class': 'select-group',
                                          'placeholder': "Choose the student's groups"
                                      }))
 
@@ -409,7 +409,7 @@ class EditStudentForm(ModelForm):
         parent_tel_numb = self.cleaned_data["parent_tel_numb"]
 
         if not parent_tel_numb.isdecimal():
-            raise ValidationError("Telephone number should only contain digits")
+            raise ValidationError("Phone number should only contain digits")
         return parent_tel_numb
 
     def clean_parent_f_name(self):
@@ -422,8 +422,9 @@ class EditStudentForm(ModelForm):
     def clean_parent_patronimic(self):
         parent_patronimic = self.cleaned_data["parent_patronimic"]
 
-        if not parent_patronimic.isalpha():
-            raise ValidationError("The patronimic should only contain letters")
+        if len(parent_patronimic) > 0:
+            if not parent_patronimic.isalpha():
+                raise ValidationError("The patronymic should only contain letters")
         return parent_patronimic
 
     def clean_parent_l_name(self):

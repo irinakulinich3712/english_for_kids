@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from ..forms import CreateApplicationForm
 from ..models import Announcement
@@ -15,6 +15,7 @@ def index(request):
         if create_form.is_valid():
             create_form.save()
             messages.success(request, "Your application has been send successfully")
+            return redirect('home')
         else:
             messages.error(request, "The form has been filled incorrectly")
     else:
