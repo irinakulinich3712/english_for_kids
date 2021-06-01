@@ -13,7 +13,6 @@
             const tBody = this.table.tBodies[0];
             const rows = Array.from(tBody.querySelectorAll('tr'));
 
-            // Sort each row
             const sortedRows = rows.sort((a, b) => {
                 const aColumnText = a.querySelector(`td:nth-child(${ this.column + 1 })`).textContent.trim();
                 const bColumnText = b.querySelector(`td:nth-child(${ this.column + 1 })`).textContent.trim();
@@ -21,18 +20,13 @@
                 return aColumnText > bColumnText ? (1 * directionModifier) : (-1 * directionModifier);
             });
 
-            // Remove all tr's from the table
             while(tBody.firstChild) {
                 tBody.removeChild(tBody.firstChild)
             }
 
-            // Add sorted sorted rows
             tBody.append(...sortedRows);
 
-            // Remember the way each column is sorted
             sortOptions.forEach(th => th.classList.remove('th-sort-asc', 'th-sort-desc'));
-            // table.querySelector(`.table__sort-option:nth-child(${ column + 1 })`).classList.toggle('th-sort-asc', asc);
-            // table.querySelector(`.table__sort-option:nth-child(${ column + 1 })`).classList.toggle('th-sort-desc', !asc);
 
             for (let i=0; i<this.table.querySelectorAll('.table__sort-option').length; i++) {
                 if (i == this.column) {

@@ -5,7 +5,6 @@
       const menuLinks = document.querySelectorAll('.navbar__menu-link');
 
       const navSlide = () => {
-      // thoggle menu
         if (menuBtn) {
             menuBtn.addEventListener('click', () => {
             menuList.classList.add('navbar--active');

@@ -3,7 +3,6 @@
     const nextBtn = document.querySelector('.next');
     const slides = document.querySelectorAll('.item');
 
-    /* Индекс слайда по умолчанию */
     let slideIndex = 1;
     showSlides(slideIndex);
 
@@ -19,13 +18,10 @@
     });
     }
 
-
-    /* Устанавливает текущий слайд */
     function currentSlide(n) {
         showSlides(slideIndex = n);
     }
 
-    /* Основная функция слайдера */
     function showSlides(n) {
         let i;
         const slides = document.getElementsByClassName("item");

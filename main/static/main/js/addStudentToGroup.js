@@ -14,7 +14,7 @@
             let temp = [];
             let temp2 = [];
             let students = [];
-            const res = await fetch('http://127.0.0.1:8000/choose-student/');
+            const res = await fetch('https://www.englishforkids.com.ua/choose-student/');
             const data = await res.text();
             const arr = data.slice(1,-1).split('}{');
             for (let i of arr) {
@@ -102,7 +102,7 @@
 
     const addStudent = async (groupId, studentId) => {
         try {
-            const res = await fetch(`http://127.0.0.1:8000/groups/${groupId}/students/add-student/${studentId}/`);
+            const res = await fetch(`https://www.englishforkids.com.ua/groups/${groupId}/students/add-student/${studentId}/`);
             document.location.reload();
         } catch (err) {
         }  

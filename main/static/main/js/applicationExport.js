@@ -2,7 +2,6 @@
     const applicationExport = document.querySelector('.application-export');
     const applicationData = document.querySelectorAll('.application-data');
     const signupInputs = document.querySelectorAll('.signup-form__input');
-//    const sideBarMenu = document.querySelectorAll('.sidebar-menu-link');
 
     if (applicationExport) {
         applicationExport.addEventListener('click', () => {
