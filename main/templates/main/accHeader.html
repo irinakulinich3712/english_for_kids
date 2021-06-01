@@ -3,18 +3,18 @@
 {% block content %}
 
 <header class="dashboard-header">
-        <div class="sidebar__icon sidebar__icon-menu-btn">
-            <i class="fas fa-bars"></i>
+        <div class="dashboard-header__left-block">
+            <a class="dashboard-header__home" href="{% url 'home' %}"  >
+                <span class="fas fa-home"></span>
+                <span>Home</span>
+            </a>
+            <div class="sidebar__icon sidebar__icon-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
-
-        <a class="dashboard-header__home" href="{% url 'home' %}"  >
-            <span fas fa-home></span>
-            Home
-        </a>
         <div class="user-wrapper">
           <a target="_blank" class="auth-btn" href="{% url 'logout' %}" >Logout</a>
         </div>
 </header>
 
-{% endblock %}
-                                                                                       
+{% endblock %}                                                                                   
