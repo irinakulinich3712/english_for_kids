@@ -14,8 +14,8 @@ cd english_for_kids
 Create a virtual environment to install dependencies in and activate it:
 
 ```sh
-virtualenv2 --no-site-packages env
-source env/bin/activate
+python -m venv venv
+source venv/bin/activate
 ```
 
 Then install the dependencies:
