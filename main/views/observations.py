@@ -9,7 +9,7 @@ from ..models import Observation, CustomUser, Student
 
 @login_required
 def observations(request, s_id):
-    if (request.user.id == s_id) or (request.user.groups.all()[0].name == 'teacher') or request.user.is_superuser:
+    if (request.user.id == s_id) or request.user.is_staff:
         observations_list = Observation.objects.filter(student=s_id)
         edit_form = EditObservationForm()
 
