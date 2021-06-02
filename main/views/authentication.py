@@ -8,6 +8,9 @@ from ..models import Student
 
 
 def login_user(request):
+    """
+    Renders the page for user login, with a form for authentication.
+    """
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
 
@@ -37,5 +40,8 @@ def login_user(request):
 
 
 def logout_user(request):
+    """
+    Logs the current user out of the system.
+    """
     logout(request)
     return redirect('login')

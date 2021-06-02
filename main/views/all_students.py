@@ -12,12 +12,14 @@ from ..models import Student, StudentGroup
 
 
 def group_check(user):
+    """Checks if the current user is admin or belongs to the teacher group of users."""
     return user.is_superuser or user.groups.filter(name='teacher').exists()
 
 
 @user_passes_test(group_check)
 @login_required
 def all_students(request):
+    """Renders the all_students page, with a list of all existing students."""
     students_list = [dict(
         id=s['user_id'], first_name=s['user__first_name'], last_name=s['user__last_name'],
         student_group_id=s['student_group_id'], student_group="", parent_f_name=s['parent_f_name'],
@@ -40,6 +42,7 @@ def all_students(request):
 @user_passes_test(group_check)
 @login_required
 def new_student(request):
+    """Renders the form for creating a new student."""
     if request.method == 'POST':
         create_form = CreateStudentForm(request.POST)
         if create_form.is_valid():

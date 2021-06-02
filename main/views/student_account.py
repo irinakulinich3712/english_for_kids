@@ -12,6 +12,10 @@ from django.http import HttpResponse
 @user_passes_test(group_check)
 @login_required
 def student_account(request, s_id):
+    """
+    Renders the student_account page, with data of that student.
+    Args: g_id: the id of the student whose account is being viewed.
+    """
     try:
         student_object = Student.objects.select_related('user').values('user_id',
                                                                        'user__username',
@@ -47,6 +51,11 @@ def student_account(request, s_id):
 @user_passes_test(group_check)
 @login_required
 def edit_student(request, s_id):
+    """
+    Renders the form for editing a student.
+    Redirects to the student_account page, with data of the edited student.
+    Args: s_id: the id of the student whose account is being edited.
+    """
     user = CustomUser.objects.get(id=s_id)
     student = Student.objects.get(user_id=s_id)
 
@@ -77,6 +86,10 @@ def edit_student(request, s_id):
 @user_passes_test(group_check)
 @login_required
 def delete_student(request, s_id):
+    """
+    Deletes the student whose account is being viewed.
+    Args: s_id: the id of the student whose account is being edited.
+    """
     user = CustomUser.objects.get(id=s_id)
     user.delete()
     messages.success(request, "The student has been deleted successfully")

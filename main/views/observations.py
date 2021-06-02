@@ -9,6 +9,11 @@ from ..models import Observation, CustomUser, Student
 
 @login_required
 def observations(request, s_id):
+    """
+    Renders the observations page, with a list of all observations for the currently viewed student,
+    and forms for creating and editing an observation.
+    Args: s_id: the id of the student whose account is being viewed.
+    """
     if (request.user.id == s_id) or request.user.is_staff:
         observations_list = Observation.objects.filter(student=s_id)
         edit_form = EditObservationForm()
@@ -44,6 +49,12 @@ def observations(request, s_id):
 @user_passes_test(group_check)
 @login_required
 def edit_observation(request, s_id, o_id):
+    """
+    Processes the form for editing an observation.
+    Redirects to the observations page, with list of observations.
+    Args: s_id: the id of the student whose account is being viewed.
+          o_id: the id of the chosen observation.
+    """
     obj = Observation.objects.get(id=o_id)
     if request.method == 'POST':
         edit_form = EditObservationForm(request.POST, instance=obj)
@@ -58,6 +69,11 @@ def edit_observation(request, s_id, o_id):
 @user_passes_test(group_check)
 @login_required
 def delete_observation(request, s_id, o_id):
+    """
+    Deletes the chosen observation.
+    Args: s_id: the id of the student whose account is being edited.
+          o_id: the id of the chosen observation.
+    """
     observation = Observation.objects.get(id=o_id)
     observation.delete()
     messages.success(request, "An observation has been deleted successfully")

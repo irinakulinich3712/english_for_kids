@@ -8,6 +8,10 @@ from ..models import Announcement
 
 
 def index(request):
+    """
+    Renders the the index page, with a list of announcements created within the last 60 days
+    and form for creating an application.
+    """
     announcements_list = Announcement.objects.filter(created_at__gte=datetime.now() - timedelta(days=60))
 
     if request.method == 'POST':

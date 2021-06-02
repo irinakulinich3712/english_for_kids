@@ -12,6 +12,10 @@ from ..models import Announcement
 @user_passes_test(group_check)
 @login_required
 def announcements(request):
+    """
+    Renders the announcements page, with a list of all announcements created within the last 60 days
+    and forms for creating and editing an announcement.
+    """
     announcements_list = Announcement.objects.filter(created_at__gte=datetime.now() - timedelta(days=60))
     edit_form = EditAnnouncementForm()
 
@@ -40,6 +44,11 @@ def announcements(request):
 @user_passes_test(group_check)
 @login_required
 def edit_announcement(request, an_id):
+    """
+    Processes the form for editing an announcement.
+    Redirects to the announcements page, with list of the latest announcements.
+    Args: an_id: the id of the announcement being edited.
+    """
     obj = Announcement.objects.get(id=an_id)
 
     if request.method == 'POST':
@@ -57,6 +66,10 @@ def edit_announcement(request, an_id):
 @user_passes_test(group_check)
 @login_required
 def delete_announcement(request, an_id):
+    """
+    Deletes the chosen announcement.
+    Args: an_id: the id of the chosen announcement.
+    """
     announcement = Announcement.objects.get(id=an_id)
     announcement.delete()
     messages.success(request, 'You have deleted the announcement successfully')

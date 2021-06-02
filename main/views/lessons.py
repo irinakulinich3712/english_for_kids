@@ -12,6 +12,11 @@ from django.http import HttpResponse
 
 @login_required
 def lessons(request, g_id):
+    """
+    Renders the lessons page, with a list of all lessons for the currently viewed group,
+    and forms for creating and editing a lesson.
+    Args: g_id: the id of the group being viewed.
+    """
     try:
         if (request.user.id in [s.user_id for s in Student.objects.filter(student_group_id=g_id)]) \
                 or request.user.is_staff:
@@ -53,6 +58,11 @@ def lessons(request, g_id):
 @user_passes_test(group_check)
 @login_required
 def edit_lesson(request, g_id, l_id):
+    """
+    Processes the form for editing a lesson.
+    Redirects to the lessons page, with list of the latest lessons.
+    Args: g_id: the id of the group being edited.
+    """
     obj = Lesson.objects.get(id=l_id)
     if request.method == 'POST':
         edit_form = EditLessonForm(request.POST, instance=obj)
@@ -69,6 +79,11 @@ def edit_lesson(request, g_id, l_id):
 @user_passes_test(group_check)
 @login_required
 def delete_lesson(request, g_id, l_id):
+    """
+    Deletes the chosen lesson.
+    Args: g_id: the id of the groups being viewed.
+          l_id: the id of the chosen lesson.
+    """
     lesson = Lesson.objects.get(id=l_id)
     lesson.delete()
     messages.success(request, "The lesson has been deleted successfully")

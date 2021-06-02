@@ -11,6 +11,9 @@ from ..models import Application
 @user_passes_test(group_check)
 @login_required
 def applications(request):
+    """
+    Renders the applications page, with a list of all applications.
+    """
     applications_list = Application.objects.all()
     return render(request, 'main/applications.html', {'applications': applications_list})
 
@@ -18,6 +21,10 @@ def applications(request):
 @user_passes_test(group_check)
 @login_required
 def one_application(request, ap_id):
+    """
+    Renders the page for one application, with data of application.
+    Args: ap_id: the id of the application being viewed.
+    """
     try:
         application_obj = Application.objects.get(id=ap_id)
     except ObjectDoesNotExist:
@@ -28,6 +35,10 @@ def one_application(request, ap_id):
 @user_passes_test(group_check)
 @login_required
 def delete_application(request, ap_id):
+    """
+    Deletes the chosen application.
+    Args: ap_id: the id of the application being deleted.
+    """
     application = Application.objects.get(id=ap_id)
     application.delete()
     messages.success(request, "You have deleted an application successfully")

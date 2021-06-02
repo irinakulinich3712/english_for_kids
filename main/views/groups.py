@@ -12,6 +12,9 @@ from ..models import StudentGroup, Student
 @user_passes_test(group_check)
 @login_required
 def all_groups(request):
+    """
+    Renders the all_groups page, with a list of all existing groups and form for creating a new group.
+    """
     groups_list = [dict(id=s_group.id, year=s_group.year, name=s_group.name,
                         student_count=len(Student.objects.filter(student_group_id=s_group.id))) for s_group in
                    StudentGroup.objects.all()]
@@ -37,6 +40,10 @@ def all_groups(request):
 @user_passes_test(group_check)
 @login_required
 def group_students(request, g_id):
+    """
+    Renders the groups_students page, with a list of all students who belong to this group.
+    Args: g_id: the id of the group being viewed.
+    """
     try:
         group_obj = StudentGroup.objects.get(id=g_id)
         num = 0
@@ -57,7 +64,9 @@ def group_students(request, g_id):
 @user_passes_test(group_check)
 @login_required
 def choose_student(request):
-
+    """
+    Returns list of data for all existing students.
+    """
     students = [dict(
         user_id=s['user_id'], user__last_name=s['user__last_name'],
         user__first_name=s['user__first_name'], student_group_id=s['student_group_id'], student_group="")
@@ -76,6 +85,12 @@ def choose_student(request):
 @user_passes_test(group_check)
 @login_required
 def add_student_to_group(request, g_id, s_id):
+    """
+    Sets the currently viewed group as a group of the chosen student.
+    Redirects to the group_students page with list of all students.
+    Args: g_id: the id of the group being viewed.
+          s_id: the id of the chosen student.
+    """
     student = Student.objects.get(user_id=s_id)
     student.student_group_id = g_id
     messages.success(request, "The student has been added to this group")
@@ -86,6 +101,10 @@ def add_student_to_group(request, g_id, s_id):
 @user_passes_test(group_check)
 @login_required
 def group(request, g_id):
+    """
+    Renders a single group page, with data of that group object and form for creating a new group.
+    Args: g_id: the id of the group being viewed.
+    """
     try:
         group_obj = StudentGroup.objects.get(id=g_id)
         student_count = len(Student.objects.filter(student_group_id=g_id))
@@ -116,6 +135,10 @@ def group(request, g_id):
 @user_passes_test(group_check)
 @login_required
 def delete_group(request, g_id):
+    """
+    Deletes the currently viewed group.
+    Args: g_id: the id of the group being viewed.
+    """
     group_object = StudentGroup.objects.get(id=g_id)
     group_object.delete()
     messages.success(request, "You have deleted a group successfully")
@@ -125,6 +148,11 @@ def delete_group(request, g_id):
 @user_passes_test(group_check)
 @login_required
 def delete_student_from_group(request, g_id, s_id):
+    """
+    Deletes the currently viewed group's id from a chosen student object student_group field.
+    Args: g_id: the id of the group being viewed.
+          s_id: the id of the chosen student.
+    """
     student = Student.objects.get(user_id=s_id)
     student.student_group_id = None
     messages.success(request, "The student has been removed from group")
