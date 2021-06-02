@@ -11,6 +11,7 @@ class StudentGroup(models.Model):
         unique_together = ('name', 'year',)
 
     def __str__(self):
+        """Returns a string representation of a student group."""
         return '%s%s' % (self.year, self.name)
 
 
@@ -20,6 +21,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=False)
 
     def __str__(self):
+        """Returns a string representation of a user."""
         return '%s %s' % (self.last_name, self.first_name)
 
 
@@ -35,6 +37,7 @@ class Student(models.Model):
                                       help_text="The student's group can be omitted")
 
     def __str__(self):
+        """Returns a string representation of a student."""
         return str(self.user)
 
 
@@ -49,6 +52,7 @@ class Observation(models.Model):
     )
 
     def __str__(self):
+        """Returns a string representation of an observation."""
         return '%s : %s' % (self.student, self.created_at)
 
 
@@ -65,6 +69,7 @@ class Application(models.Model):
     parent_l_name = models.CharField(max_length=30, verbose_name="Parent's last name")
 
     def __str__(self):
+        """Returns a string representation of an application."""
         return '%s : %s %s' % (self.created_at, self.f_name, self.l_name)
 
 
@@ -74,6 +79,7 @@ class Lesson(models.Model):
     student_group = models.ForeignKey(StudentGroup, to_field='id', on_delete=models.CASCADE)
 
     def __str__(self):
+        """Returns a string representation of a lesson."""
         return '%s : %s' % (self.created_at, self.student_group)
 
 
@@ -82,4 +88,5 @@ class Announcement(models.Model):
     created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
+        """Returns a string representation of an announcement."""
         return '%s : %s' % (self.created_at, self.announcement)
