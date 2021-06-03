@@ -32,11 +32,6 @@ ALLOWED_HOSTS = []
 Also, either set the CSRF_COOKIE_SECURE , SESSION_COOKIE_SECURE, SECURE_SSL_REDIRECT, SECURE_BROWSER_XSS_FILTER, SECURE_CONTENT_TYPE_NOSNIFF 
 values to False or comment them
 
-Then install the dependencies:
-
-```sh
-(env) pip install -r requirements.txt
-```
 Also, in addStudentToGroup.js file change the urls in
 ```sh
 const res = await fetch('https://www.englishforkids.com.ua/choose-student/');
@@ -50,6 +45,13 @@ to these, correspondingly:
 const res = await fetch('http://127.0.0.1:8000/choose-student/');
 const res = await fetch(`http://127.0.0.1:8000/groups/${groupId}/students/add-student/${studentId}/`);
 ```
+
+Then install the dependencies:
+
+```sh
+(env) pip install -r requirements.txt
+```
+
 Once `pip` has finished downloading the dependencies:
 ```sh
 (env) python manage.py runserver
