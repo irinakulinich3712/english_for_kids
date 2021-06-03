@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 Also, either set the CSRF_COOKIE_SECURE , SESSION_COOKIE_SECURE, SECURE_SSL_REDIRECT, SECURE_BROWSER_XSS_FILTER, SECURE_CONTENT_TYPE_NOSNIFF 
 values to False or comment them
 
-Also, in addStudentToGroup.js file change the urls in
+In addition, in addStudentToGroup.js file change the urls in
 ```sh
 const res = await fetch('https://www.englishforkids.com.ua/choose-student/');
 ```
