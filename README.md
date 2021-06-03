@@ -37,6 +37,19 @@ Then install the dependencies:
 ```sh
 (env) pip install -r requirements.txt
 ```
+Also, in addStudentToGroup.js file change the urls in
+```sh
+const res = await fetch('https://www.englishforkids.com.ua/choose-student/');
+```
+and 
+```sh
+ const res = await fetch(`https://www.englishforkids.com.ua/groups/${groupId}/students/add-student/${studentId}/`);
+```
+to these, correspondingly:
+```sh
+const res = await fetch('http://127.0.0.1:8000/choose-student/');
+const res = await fetch(`http://127.0.0.1:8000/groups/${groupId}/students/add-student/${studentId}/`);
+```
 Once `pip` has finished downloading the dependencies:
 ```sh
 (env) python manage.py runserver
