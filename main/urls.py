@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('applications/', applications.applications, name='applications'),
     path('applications/<int:ap_id>', applications.one_application, name='application'),
-    path('applications/delete-application/<int:ap_id>/', applications.delete_application, name='delete_application'),
+    path('applications/<int:ap_id>/delete-application/', applications.delete_application, name='delete_application'),
 
     path('students/<int:s_id>/', student_account.student_account, name='student_account'),
     path('students/<int:s_id>/delete-student/', student_account.delete_student, name='delete_student'),
